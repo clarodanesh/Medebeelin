@@ -10,7 +10,17 @@ public class ScreenControlScript : MonoBehaviour
         SceneManager.LoadScene("Level1");
     }
 
-    // Start is called before the first frame update
+    public void OpenInstructions()
+    {
+        SceneManager.LoadScene("Instructions");
+    }
+
+    public void OpenMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    // Start is called before the first frame updates
     void Start()
     {
         
