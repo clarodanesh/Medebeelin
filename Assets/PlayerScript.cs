@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
+    public bool isGrounded;
     public Rigidbody2D playerRigidBody;
     // Start is called before the first frame update
     void Start()
@@ -24,7 +25,11 @@ public class PlayerScript : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            playerRigidBody.velocity = gameObject.transform.up * 10;
+            if (isGrounded)
+            {
+                playerRigidBody.velocity = gameObject.transform.up * 10;
+                isGrounded = false;
+            }
         }
     }
 }
