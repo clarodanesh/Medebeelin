@@ -6,8 +6,12 @@ public class PlayerFloorCheck : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        transform.parent.GetComponent<PlayerScript>().isGrounded = true;
+        if (transform.parent.GetComponent<PlayerScript>().isGrounded == false)
+        {
+            transform.parent.GetComponent<PlayerScript>().isGrounded = true;
+        }
     }
+
     // Start is called before the first frame update
     void Start()
     {

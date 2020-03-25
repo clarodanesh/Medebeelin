@@ -17,17 +17,17 @@ public class PlayerScript : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            playerRigidBody.velocity = gameObject.transform.right * 10;
+            playerRigidBody.velocity = gameObject.transform.right * 7;
         }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            playerRigidBody.velocity = -gameObject.transform.right * 10;
+            playerRigidBody.velocity = -gameObject.transform.right * 7;
         }
         if (Input.GetKey(KeyCode.UpArrow))
         {
             if (isGrounded)
             {
-                playerRigidBody.velocity = gameObject.transform.up * 10;
+                playerRigidBody.velocity = gameObject.transform.up * 40;
                 isGrounded = false;
             }
         }
