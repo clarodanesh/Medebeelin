@@ -4,12 +4,21 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
+    public static int health;
     public bool isGrounded;
     public Rigidbody2D playerRigidBody;
     // Start is called before the first frame update
     void Start()
     {
         playerRigidBody = GetComponent<Rigidbody2D>();
+    }
+
+    void CheckPlayerHealth()
+    {
+        if(health <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     // Update is called once per frame
@@ -31,5 +40,7 @@ public class PlayerScript : MonoBehaviour
                 isGrounded = false;
             }
         }
+
+        CheckPlayerHealth();
     }
 }
