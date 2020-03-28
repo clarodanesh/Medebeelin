@@ -49,7 +49,7 @@ public class LevelManager : MonoBehaviour
     void Update()
     {
         Debug.Log("current score " + score);
-        Debug.Log("current level " + level);
+        Debug.Log("current level " + PlayerPrefs.GetString("score", "null"));
 
         levelText.text = "Level: " + levelNumber;
         scoreText.text = "Score: " + score.ToString();
