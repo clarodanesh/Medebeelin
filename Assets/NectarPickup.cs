@@ -13,7 +13,7 @@ public class NectarPickup : MonoBehaviour
             Destroy(gameObject);
             //you should also have a manager class where you store your score and other useful stuff
             LevelManager.score++;
-            PlayerScript.health--;
+            AudioManagerScript.nectarAudioSource.Play();
         }
     }
 

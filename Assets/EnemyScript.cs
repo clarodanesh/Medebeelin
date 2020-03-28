@@ -11,11 +11,10 @@ public class EnemyScript : MonoBehaviour
         if (collision.collider.tag == "Player")
         {
             Debug.Log("Hitting");
+            LevelManager.score = LevelManager.score + 20;
             //remove the coin
             Destroy(gameObject);
         }
-
-
     }
     // Start is called before the first frame update
     void Start()
