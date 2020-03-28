@@ -56,6 +56,10 @@ public class PlayerScript : MonoBehaviour
                 //isGrounded = false;
             }
         }
+        if(Input.anyKey == false)
+        {
+            Debug.Log("NO KEYS DOWN");
+        }
 
         CheckPlayerHealth();
     }
