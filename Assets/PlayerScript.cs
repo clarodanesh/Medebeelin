@@ -53,6 +53,7 @@ public class PlayerScript : MonoBehaviour
             if (isGrounded)
             {
                 playerRigidBody.velocity = gameObject.transform.up * 40;
+                PlayerAudioManagerScript.playerAudioSource.Play();
                 //isGrounded = false;
             }
         }
