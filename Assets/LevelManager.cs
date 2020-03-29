@@ -10,9 +10,16 @@ public class LevelManager : MonoBehaviour
     public static string level;
     public Text levelText, scoreText, healthText;
     public string levelNumber;
+    public Button upgradeBtn;
+    public GameObject buttonPanel;
+    public int timesUpgraded;
+    public int dismissIncrement;
+
     // Start is called before the first frame update
     void Start()
     {
+        //upgradeBtn.gameObject.SetActive(false);
+        buttonPanel.gameObject.SetActive(false);
         level = SceneManager.GetActiveScene().name;
 
         //Find the GameObject named Best in the scene
@@ -27,6 +34,8 @@ public class LevelManager : MonoBehaviour
 
         GetLevelNumber(level);
         PlayerScript.health = 100;
+        dismissIncrement = 100;
+        timesUpgraded = 0;
     }
 
     void GetLevelNumber(string l)
@@ -45,6 +54,26 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    void DisplayUpgradeButton()
+    {
+        buttonPanel.gameObject.SetActive(true);
+    }
+
+    public void UpgradePlayer()
+    {
+        buttonPanel.gameObject.SetActive(false);
+        score = score - 50;
+        PlayerScript.health = PlayerScript.health + 50;
+        timesUpgraded++;
+        dismissIncrement = dismissIncrement - 100;
+    }
+
+    public void DismissUpgrade()
+    {
+        buttonPanel.gameObject.SetActive(false);
+        dismissIncrement = dismissIncrement + 100;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -54,5 +83,10 @@ public class LevelManager : MonoBehaviour
         levelText.text = "Level: " + levelNumber;
         scoreText.text = "Score: " + score.ToString();
         healthText.text = "Health: " + PlayerScript.health.ToString();
+
+        if(score > dismissIncrement && timesUpgraded < 1)
+        {
+            DisplayUpgradeButton();
+        }
     }
 }
