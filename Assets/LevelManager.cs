@@ -14,6 +14,7 @@ public class LevelManager : MonoBehaviour
     public GameObject buttonPanel;
     public int timesUpgraded;
     public int dismissIncrement;
+    int clipPlayedAmount;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +37,7 @@ public class LevelManager : MonoBehaviour
         PlayerScript.health = 100;
         dismissIncrement = 100;
         timesUpgraded = 0;
+        clipPlayedAmount = 0;
     }
 
     void GetLevelNumber(string l)
@@ -72,6 +74,7 @@ public class LevelManager : MonoBehaviour
     {
         buttonPanel.gameObject.SetActive(false);
         dismissIncrement = dismissIncrement + 100;
+        clipPlayedAmount = 0;
     }
 
     // Update is called once per frame
@@ -87,6 +90,10 @@ public class LevelManager : MonoBehaviour
         if(score > dismissIncrement && timesUpgraded < 1)
         {
             DisplayUpgradeButton();
+            if (clipPlayedAmount == 0) {
+                UpgradeAudioManager.upgradeAudioSource.Play();
+            }
+            clipPlayedAmount++;
         }
     }
 }

@@ -8,8 +8,15 @@ public class DeathPitScript : MonoBehaviour
     {
         if (collision.tag.Contains("Player"))
         {
-            PlayerScript.health = 0;
+            DeathAudioManager.deathAudioSource.Play();
+            //PlayerScript.health = 0;
+            Invoke("RemovePlayerHealth", 1);
         }
+    }
+
+    void RemovePlayerHealth()
+    {
+        PlayerScript.health = 0;
     }
     // Start is called before the first frame update
     void Start()

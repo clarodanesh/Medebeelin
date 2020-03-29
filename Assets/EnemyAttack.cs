@@ -10,6 +10,7 @@ public class EnemyAttack : MonoBehaviour
         {
             Debug.Log("Hitting");
             PlayerScript.health = PlayerScript.health - 20;
+            DeathAudioManager.deathAudioSource.Play();
         }
     }
     // Start is called before the first frame update
