@@ -8,19 +8,25 @@ public class LevelManager : MonoBehaviour
 {
     public static int score;
     public static string level;
+    public static string instructionTextValue;
     public Text levelText, scoreText, healthText;
     public string levelNumber;
     public Button upgradeBtn;
     public GameObject buttonPanel;
+    public GameObject instructionPanel;
+    public GameObject instructionText;
     public int timesUpgraded;
     public int dismissIncrement;
     int clipPlayedAmount;
+    static public bool showInstruction;
 
     // Start is called before the first frame update
     void Start()
     {
         //upgradeBtn.gameObject.SetActive(false);
         buttonPanel.gameObject.SetActive(false);
+        instructionPanel.gameObject.SetActive(false);
+
         level = SceneManager.GetActiveScene().name;
 
         //Find the GameObject named Best in the scene
@@ -38,6 +44,7 @@ public class LevelManager : MonoBehaviour
         dismissIncrement = 100;
         timesUpgraded = 0;
         clipPlayedAmount = 0;
+        showInstruction = false;
     }
 
     void GetLevelNumber(string l)
@@ -77,6 +84,12 @@ public class LevelManager : MonoBehaviour
         clipPlayedAmount = 0;
     }
 
+
+    void DismissInstruction()
+    {
+        instructionPanel.gameObject.SetActive(false);
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -94,6 +107,15 @@ public class LevelManager : MonoBehaviour
                 UpgradeAudioManager.upgradeAudioSource.Play();
             }
             clipPlayedAmount++;
+        }
+
+        if (showInstruction)
+        {
+            Debug.Log("Allowing");
+            instructionPanel.gameObject.SetActive(true);
+            instructionText.GetComponent<Text>().text = instructionTextValue; 
+            Invoke("DismissInstruction", 5);
+            showInstruction = false;
         }
     }
 }
