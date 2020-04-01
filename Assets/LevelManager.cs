@@ -103,7 +103,8 @@ public class LevelManager : MonoBehaviour
         if(score > dismissIncrement && timesUpgraded < 1)
         {
             DisplayUpgradeButton();
-            if (clipPlayedAmount == 0) {
+            if (clipPlayedAmount == 0)
+            {
                 UpgradeAudioManager.upgradeAudioSource.Play();
             }
             clipPlayedAmount++;
