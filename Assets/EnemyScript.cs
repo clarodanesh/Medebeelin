@@ -25,6 +25,8 @@ public class EnemyScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+
         if (pos == "left")
         {
             enemyRigidBody.velocity = -gameObject.transform.right * 1;

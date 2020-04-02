@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerScript : MonoBehaviour
 {
+    public ParticleSystem nectarHitParticles;
     public static int health;
     public bool isGrounded;
     public Rigidbody2D playerRigidBody;
@@ -17,6 +18,18 @@ public class PlayerScript : MonoBehaviour
                 EnemyScript.pos = "right";
             }
             else if(EnemyScript.pos == "right")
+            {
+                EnemyScript.pos = "left";
+            }
+        }
+        if (collision.collider.tag == "EnemyBody")
+        {
+            nectarHitParticles.Play();
+            if (EnemyScript.pos == "left")
+            {
+                EnemyScript.pos = "right";
+            }
+            else if (EnemyScript.pos == "right")
             {
                 EnemyScript.pos = "left";
             }
