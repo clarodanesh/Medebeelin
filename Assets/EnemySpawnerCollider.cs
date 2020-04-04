@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemySpawnerCollider : MonoBehaviour
 {
@@ -14,23 +15,46 @@ public class EnemySpawnerCollider : MonoBehaviour
             Debug.Log("hittin gthe player should show");
             Debug.Log(" " + gameObject.transform.position.x);
             Debug.Log(firstSpawned);
-            if (gameObject.transform.position.x == 97.47f && firstSpawned == false)
+            if (SceneManager.GetActiveScene().name == "Level1")
             {
-                Debug.Log("inside first");
-                SpawnEnemy(98.57f, 0.699f, 0f);
-                firstSpawned = true;
-            }
-            else if(gameObject.transform.position.x == 115.967f && secondSpawned == false)
+                if (gameObject.transform.position.x == 97.47f && firstSpawned == false)
+                {
+                    Debug.Log("inside first");
+                    SpawnEnemy(98.57f, 0.699f, 0f);
+                    firstSpawned = true;
+                }
+                else if (gameObject.transform.position.x == 115.967f && secondSpawned == false)
+                {
+                    Debug.Log("inside second");
+                    SpawnEnemy(117.53f, 0.62f, 0f);
+                    secondSpawned = true;
+                }
+                else if (gameObject.transform.position.x == 142.46f && thirdSpawned == false)
+                {
+                    Debug.Log("inside third");
+                    SpawnEnemy(146.051f, -1.493f, 0f);
+                    thirdSpawned = true;
+                }
+            }else if(SceneManager.GetActiveScene().name == "Level2")
             {
-                Debug.Log("inside second");
-                SpawnEnemy(117.53f, 0.62f, 0f);
-                secondSpawned = true;
-            }
-            else if (gameObject.transform.position.x == 142.46f && thirdSpawned == false)
-            {
-                Debug.Log("inside third");
-                SpawnEnemy(146.051f, -1.493f, 0f);
-                thirdSpawned = true;
+                if (gameObject.transform.position.x == 67.48f && firstSpawned == false)
+                {
+                    Debug.Log("inside first");
+                    SpawnEnemy(74.32f, 2.01f, 0f);
+                    firstSpawned = true;
+                }
+                else if (gameObject.transform.position.x == 152.94f && secondSpawned == false)
+                {
+                    Debug.Log("inside second");
+                    SpawnEnemy(157.588f, -3f, 0f);
+                    secondSpawned = true;
+                }
+                else if (gameObject.transform.position.x == 94.44f && thirdSpawned == false)
+                {
+                    Debug.Log("inside third");
+                    SpawnEnemy(99.16f, -3f, 0f);
+                    thirdSpawned = true;
+                }
             }
         }
     }
