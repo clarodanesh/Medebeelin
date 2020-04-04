@@ -16,6 +16,7 @@ public class EnemyScript : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,8 +26,6 @@ public class EnemyScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-
         if (pos == "left")
         {
             enemyRigidBody.velocity = -gameObject.transform.right * 1;

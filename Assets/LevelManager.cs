@@ -23,6 +23,10 @@ public class LevelManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        /*if(check local storage value gameWasLoaded == true/false)
+        {
+            create a new game else load the game from the server
+        }*/
         //upgradeBtn.gameObject.SetActive(false);
         buttonPanel.gameObject.SetActive(false);
         instructionPanel.gameObject.SetActive(false);

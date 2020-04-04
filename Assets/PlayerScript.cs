@@ -49,10 +49,17 @@ public class PlayerScript : MonoBehaviour
         direction = 1;
     }
 
+    void RemovePlayerHealth()
+    {
+        health = 0;
+        LevelManager.score = 0;
+    }
+
     void CheckPlayerHealth()
     {
         if(health <= 0)
         {
+            RemovePlayerHealth();
             Destroy(gameObject);
             SceneManager.LoadScene("GameOver");
         }
