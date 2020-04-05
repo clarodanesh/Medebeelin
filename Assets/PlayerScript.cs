@@ -8,6 +8,7 @@ public class PlayerScript : MonoBehaviour
     public ParticleSystem nectarHitParticles;
     private int direction;
     public static int health;
+    public static int speed;
     public bool isGrounded;
     public Rigidbody2D playerRigidBody;
     public Animator animator;
@@ -15,6 +16,12 @@ public class PlayerScript : MonoBehaviour
     public RuntimeAnimatorController leftAnim;
     public RuntimeAnimatorController stoppedRight;
     public RuntimeAnimatorController stoppedLeft;
+
+    public RuntimeAnimatorController upRightAnim;
+    public RuntimeAnimatorController upLeftAnim;
+    public RuntimeAnimatorController upStoppedRight;
+    public RuntimeAnimatorController upStoppedLeft;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.tag == "Enemy")
@@ -41,6 +48,7 @@ public class PlayerScript : MonoBehaviour
             }
         }
     }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -71,14 +79,28 @@ public class PlayerScript : MonoBehaviour
         if (Input.GetKey(KeyCode.RightArrow))
         {
             direction = 1;
-            playerRigidBody.velocity = gameObject.transform.right * 7;
-            animator.runtimeAnimatorController = rightAnim as RuntimeAnimatorController;
+            playerRigidBody.velocity = gameObject.transform.right * speed;
+            if (LevelManager.spriteType == "normal")
+            {
+                animator.runtimeAnimatorController = rightAnim as RuntimeAnimatorController;
+            }
+            else if (LevelManager.spriteType == "upgraded")
+            {
+                animator.runtimeAnimatorController = upRightAnim as RuntimeAnimatorController;
+            }
         }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             direction = 2;
-            playerRigidBody.velocity = -gameObject.transform.right * 7;
-            animator.runtimeAnimatorController = leftAnim as RuntimeAnimatorController;
+            playerRigidBody.velocity = -gameObject.transform.right * speed;
+            if (LevelManager.spriteType == "normal")
+            {
+                animator.runtimeAnimatorController = leftAnim as RuntimeAnimatorController;
+            }
+            else if (LevelManager.spriteType == "upgraded")
+            {
+                animator.runtimeAnimatorController = upLeftAnim as RuntimeAnimatorController;
+            }
         }
         if (Input.GetKey(KeyCode.UpArrow))
         {
@@ -87,11 +109,25 @@ public class PlayerScript : MonoBehaviour
                 playerRigidBody.velocity = gameObject.transform.up * 40;
                 if (direction == 1)
                 {
-                    animator.runtimeAnimatorController = rightAnim as RuntimeAnimatorController;
+                    if (LevelManager.spriteType == "normal")
+                    {
+                        animator.runtimeAnimatorController = rightAnim as RuntimeAnimatorController;
+                    }
+                    else if (LevelManager.spriteType == "upgraded")
+                    {
+                        animator.runtimeAnimatorController = upRightAnim as RuntimeAnimatorController;
+                    }
                 }
                 if (direction == 2)
                 {
-                    animator.runtimeAnimatorController = leftAnim as RuntimeAnimatorController;
+                    if (LevelManager.spriteType == "normal")
+                    {
+                        animator.runtimeAnimatorController = leftAnim as RuntimeAnimatorController;
+                    }
+                    else if (LevelManager.spriteType == "upgraded")
+                    {
+                        animator.runtimeAnimatorController = upLeftAnim as RuntimeAnimatorController;
+                    }
                 }
                 PlayerAudioManagerScript.playerAudioSource.Play();
                 //isGrounded = false;
@@ -102,11 +138,25 @@ public class PlayerScript : MonoBehaviour
             Debug.Log("NO KEYS DOWN");
             if(direction == 1)
             {
-                animator.runtimeAnimatorController = stoppedRight as RuntimeAnimatorController;
+                if (LevelManager.spriteType == "normal")
+                {
+                    animator.runtimeAnimatorController = stoppedRight as RuntimeAnimatorController;
+                }
+                else if (LevelManager.spriteType == "upgraded")
+                {
+                    animator.runtimeAnimatorController = upStoppedRight as RuntimeAnimatorController;
+                }
             }
             if(direction == 2)
             {
-                animator.runtimeAnimatorController = stoppedLeft as RuntimeAnimatorController;
+                if (LevelManager.spriteType == "normal")
+                {
+                    animator.runtimeAnimatorController = stoppedLeft as RuntimeAnimatorController;
+                }
+                else if (LevelManager.spriteType == "upgraded")
+                {
+                    animator.runtimeAnimatorController = upStoppedLeft as RuntimeAnimatorController;
+                }
             }
         }
 

@@ -11,14 +11,20 @@ public class LevelManager : MonoBehaviour
     public static string instructionTextValue;
     public Text levelText, scoreText, healthText;
     public string levelNumber;
-    public Button upgradeBtn;
-    public GameObject buttonPanel;
+    public Button randomBtn, healthBtn, speedBtn, scoreBtn;
+    public GameObject messagePanel;
     public GameObject instructionPanel;
+    public GameObject openUpgradeMenuBtn;
+    public GameObject upgradeMenuPanel;
+    public GameObject customiseCharacterBtn;
+    public GameObject customiseCharacterMenu;
     public GameObject instructionText;
+    public static string spriteType;
     public int timesUpgraded;
     public int dismissIncrement;
     int clipPlayedAmount;
     static public bool showInstruction;
+    public bool updateIsShown;
 
     // Start is called before the first frame update
     void Start()
@@ -28,8 +34,12 @@ public class LevelManager : MonoBehaviour
             create a new game else load the game from the server
         }*/
         //upgradeBtn.gameObject.SetActive(false);
-        buttonPanel.gameObject.SetActive(false);
+        messagePanel.gameObject.SetActive(false);
         instructionPanel.gameObject.SetActive(false);
+        openUpgradeMenuBtn.gameObject.SetActive(false);
+        upgradeMenuPanel.gameObject.SetActive(false);
+        customiseCharacterBtn.gameObject.SetActive(false);
+        customiseCharacterMenu.gameObject.SetActive(false);
 
         level = SceneManager.GetActiveScene().name;
 
@@ -45,10 +55,18 @@ public class LevelManager : MonoBehaviour
 
         GetLevelNumber(level);
         PlayerScript.health = 100;
+        PlayerScript.speed = 7;
+        NectarPickup.nectarValue = 1;
         dismissIncrement = 100;
         timesUpgraded = 0;
         clipPlayedAmount = 0;
         showInstruction = false;
+        updateIsShown = false;
+        spriteType = "normal";
+        randomBtn.interactable = false;
+        healthBtn.interactable = false;
+        speedBtn.interactable = false;
+        scoreBtn.interactable = false;
     }
 
     void GetLevelNumber(string l)
@@ -67,27 +85,148 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    //Button btn = customiseCharacterBtn.gameObject.GetComponent<Button>();
+    //btn.interactable = false;
+
+    public void ShowUpgradeMenu()
+    {
+        upgradeMenuPanel.gameObject.SetActive(true);
+        openUpgradeMenuBtn.gameObject.SetActive(false);
+        if(score > 100)
+        {
+            randomBtn.interactable = true;
+        }
+        if (score > 200)
+        {
+            healthBtn.interactable = true;
+        }
+        if (score > 300)
+        {
+            speedBtn.interactable = true;
+        }
+        if (score > 400)
+        {
+            scoreBtn.interactable = true;
+        }
+    }
+
+    public void HideUpgradeMenu()
+    {
+        upgradeMenuPanel.gameObject.SetActive(false);
+        openUpgradeMenuBtn.gameObject.SetActive(true);
+    }
+
+    public void RandomUpgrade()
+    {
+        System.Random rnd = new System.Random();
+        //int randomNumber = Random.Range(1, 4);
+
+        //Debug.Log("Random " + randomNumber);
+        int randomNumber = 3;
+
+        openUpgradeMenuBtn.gameObject.SetActive(false);
+        upgradeMenuPanel.gameObject.SetActive(false);
+        customiseCharacterBtn.gameObject.SetActive(true);
+        if(randomNumber == 1)
+        {
+            UpgradeHealth();
+        }
+        if(randomNumber == 2)
+        {
+            UpgradeSpeed();
+        }
+        if (randomNumber == 3)
+        {
+            UpgradeScore();
+        }
+    }
+
+    public void UpgradeHealth()
+    {
+        Debug.Log("upgrading health");
+        openUpgradeMenuBtn.gameObject.SetActive(false);
+        upgradeMenuPanel.gameObject.SetActive(false);
+        customiseCharacterBtn.gameObject.SetActive(true);
+        spriteType = "upgraded";
+
+        score = score - 50;
+        PlayerScript.health = PlayerScript.health + 50;
+        timesUpgraded++;
+    }
+
+    public void UpgradeSpeed()
+    {
+        Debug.Log("upgrading speed");
+        openUpgradeMenuBtn.gameObject.SetActive(false);
+        upgradeMenuPanel.gameObject.SetActive(false);
+        customiseCharacterBtn.gameObject.SetActive(true);
+        spriteType = "upgraded";
+
+        score = score - 50;
+        PlayerScript.speed = 9;
+        timesUpgraded++;
+    }
+
+    public void UpgradeScore()
+    {
+        Debug.Log("upgrading score");
+        openUpgradeMenuBtn.gameObject.SetActive(false);
+        upgradeMenuPanel.gameObject.SetActive(false);
+        customiseCharacterBtn.gameObject.SetActive(true);
+        spriteType = "upgraded";
+
+        score = score - 50;
+        NectarPickup.nectarValue = NectarPickup.nectarValue + 1;
+        timesUpgraded++;
+    }
+
+    public void ShowCharacterCustomiseMenu()
+    {
+        customiseCharacterBtn.gameObject.SetActive(false);
+        customiseCharacterMenu.gameObject.SetActive(true);
+    }
+
+    public void HideCustomiseMenu()
+    {
+        customiseCharacterMenu.gameObject.SetActive(false);
+        customiseCharacterBtn.gameObject.SetActive(true);
+    }
+
+    public void SetNormalSprite()
+    {
+        customiseCharacterMenu.gameObject.SetActive(false);
+        customiseCharacterBtn.gameObject.SetActive(true);
+        spriteType = "normal";
+    }
+
+    public void SetUpgradedSprite()
+    {
+        customiseCharacterMenu.gameObject.SetActive(false);
+        customiseCharacterBtn.gameObject.SetActive(true);
+        spriteType = "upgraded";
+    }
+
     void DisplayUpgradeButton()
     {
-        buttonPanel.gameObject.SetActive(true);
+        messagePanel.gameObject.SetActive(true);
+        openUpgradeMenuBtn.gameObject.SetActive(true);
+        updateIsShown = true;
+        Invoke("DismissUpgrade", 1);
     }
 
     public void UpgradePlayer()
     {
-        buttonPanel.gameObject.SetActive(false);
+        messagePanel.gameObject.SetActive(false);
         score = score - 50;
         PlayerScript.health = PlayerScript.health + 50;
         timesUpgraded++;
-        dismissIncrement = dismissIncrement - 100;
     }
 
     public void DismissUpgrade()
     {
-        buttonPanel.gameObject.SetActive(false);
-        dismissIncrement = dismissIncrement + 100;
+        messagePanel.gameObject.SetActive(false);
         clipPlayedAmount = 0;
     }
-
 
     void DismissInstruction()
     {
@@ -104,7 +243,7 @@ public class LevelManager : MonoBehaviour
         scoreText.text = "Score: " + score.ToString();
         healthText.text = "Health: " + PlayerScript.health.ToString();
 
-        if(score > dismissIncrement && timesUpgraded < 1)
+        if(score > 100 && timesUpgraded < 1 && !updateIsShown)
         {
             DisplayUpgradeButton();
             if (clipPlayedAmount == 0)
@@ -122,5 +261,6 @@ public class LevelManager : MonoBehaviour
             Invoke("DismissInstruction", 5);
             showInstruction = false;
         }
+        Debug.Log("from the level manager script " + NectarPickup.nectarValue);
     }
 }
