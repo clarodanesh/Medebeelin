@@ -92,19 +92,19 @@ public class LevelManager : MonoBehaviour
     {
         upgradeMenuPanel.gameObject.SetActive(true);
         openUpgradeMenuBtn.gameObject.SetActive(false);
-        if(score > 100)
+        if(score > 70)
         {
             randomBtn.interactable = true;
         }
-        if (score > 200)
+        if (score > 100)
         {
             healthBtn.interactable = true;
         }
-        if (score > 300)
+        if (score > 120)
         {
             speedBtn.interactable = true;
         }
-        if (score > 400)
+        if (score > 150)
         {
             scoreBtn.interactable = true;
         }
@@ -119,10 +119,10 @@ public class LevelManager : MonoBehaviour
     public void RandomUpgrade()
     {
         System.Random rnd = new System.Random();
-        //int randomNumber = Random.Range(1, 4);
+        int randomNumber = Random.Range(1, 4);
 
-        //Debug.Log("Random " + randomNumber);
-        int randomNumber = 3;
+        Debug.Log("Random " + randomNumber);
+        //int randomNumber = 3;
 
         openUpgradeMenuBtn.gameObject.SetActive(false);
         upgradeMenuPanel.gameObject.SetActive(false);
@@ -243,7 +243,7 @@ public class LevelManager : MonoBehaviour
         scoreText.text = "Score: " + score.ToString();
         healthText.text = "Health: " + PlayerScript.health.ToString();
 
-        if(score > 100 && timesUpgraded < 1 && !updateIsShown)
+        if(score > 70 && timesUpgraded < 1 && !updateIsShown)
         {
             DisplayUpgradeButton();
             if (clipPlayedAmount == 0)
@@ -261,6 +261,7 @@ public class LevelManager : MonoBehaviour
             Invoke("DismissInstruction", 5);
             showInstruction = false;
         }
+        Debug.Log("INTSCORE " + score);
         Debug.Log("from the level manager script " + NectarPickup.nectarValue);
     }
 }
