@@ -160,6 +160,10 @@ public class PlayerScript : MonoBehaviour
             }
         }
 
+        Debug.Log("SPEED" + speed);
+        Debug.Log("TRANSFORM RIGHT" + gameObject.transform.right);
+        Debug.Log("VELOCITY" + playerRigidBody.velocity);
+
         CheckPlayerHealth();
     }
 }
