@@ -54,8 +54,19 @@ public class LevelManager : MonoBehaviour
         healthText = healthTextGO.GetComponent<Text>();
 
         GetLevelNumber(level);
-        PlayerScript.health = 100;
-        PlayerScript.speed = 7;
+
+        if (level == "Level1" || level == "Level2")
+        {
+            PlayerScript.health = 100;
+            PlayerScript.speed = 7;
+        }
+        else if (level == "BossLevel")
+        {
+            //only if boss level
+            BossLevelPlayerScript.health = 100;
+            BossLevelPlayerScript.speed = 7;
+        }
+        
         NectarPickup.nectarValue = 1;
         dismissIncrement = 100;
         timesUpgraded = 0;
