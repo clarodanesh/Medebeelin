@@ -11,6 +11,10 @@ public class Boss : MonoBehaviour
     public GameObject bottomLeftTrigger;
     public GameObject bottomRightTrigger;
 
+    GameObject selectedTrigger;
+
+    int triggerHit;
+
     bool shooting;
     bool moving;
 
@@ -19,33 +23,37 @@ public class Boss : MonoBehaviour
         //WANT TO DELETE THE GAMEOBJECT HERE AND UPDATE THE SCORE
         if (collision.tag.Contains("TopLeftTrigger"))
         {
+            triggerHit = 1;
             FaceObject(player);
             shooting = true;
             moving = false;
-            StartCoroutine(TurnToTrigger(10f, topRightTrigger));
+            StartCoroutine(TurnToTrigger(10f));
             //after boss has shot the projectiles it moves to the next object first by facing it
             //FaceObject(topRightTrigger);
         }
         if (collision.tag.Contains("TopRightTrigger"))
         {
+            triggerHit = 2;
             FaceObject(player);
             shooting = true;
             moving = false;
-            StartCoroutine(TurnToTrigger(10f, bottomRightTrigger));
+            StartCoroutine(TurnToTrigger(10f));
         }
         if (collision.tag.Contains("BottomLeftTrigger"))
         {
+            triggerHit = 3;
             FaceObject(player);
             shooting = true;
             moving = false;
-            StartCoroutine(TurnToTrigger(10f, topLeftTrigger));
+            StartCoroutine(TurnToTrigger(10f));
         }
         if (collision.tag.Contains("BottomRightTrigger"))
         {
+            triggerHit = 4;
             FaceObject(player);
             shooting = true;
             moving = false;
-            StartCoroutine(TurnToTrigger(10f, bottomLeftTrigger));
+            StartCoroutine(TurnToTrigger(10f));
         }
     }
 
@@ -54,16 +62,19 @@ public class Boss : MonoBehaviour
         Using Invoke I cant pass parameters to the function that I call in Invoke
         so I needed a solution that would allow me to delay rotating the enemy ai and pass 
         parameters to the function I was calling
-    
+        
         I created a solution with aid from the unity forums
         https://answers.unity.com/questions/788124/invoking-a-method-that-takes-variables.html 
     */
-    IEnumerator TurnToTrigger(float delay, GameObject triggerType)
+    IEnumerator TurnToTrigger(float delay)
     {
         yield return new WaitForSeconds(delay);
         shooting = false;
         moving = true;
-        FaceObject(triggerType);
+        System.Random rnd = new System.Random();
+        int randomNumber = Random.Range(1, 5);
+
+        FaceObject(TriggerToFace(randomNumber));
     }
 
     // Start is called before the first frame update
@@ -87,8 +98,36 @@ public class Boss : MonoBehaviour
         moving = true;
     }
 
+    GameObject TriggerToFace(int rnd)
+    {
+        if (rnd == 1 && triggerHit != 1)
+        {
+            return topLeftTrigger;
+        }
+        else if(rnd == 2 && triggerHit != 2)
+        {
+            return topRightTrigger;
+        }
+        else if (rnd == 3 && triggerHit != 3)
+        {
+            return bottomLeftTrigger;
+        }
+        else if (rnd == 4 && triggerHit != 4)
+        {
+            return bottomRightTrigger;
+        }
+        else
+        {
+            System.Random rand = new System.Random();
+            int randomNumber = Random.Range(1, 5);
+            return TriggerToFace(randomNumber);
+        }
+    }
+
     void FaceObject(GameObject otf)
     {
+        selectedTrigger = otf;
+
         Vector3 targ = otf.transform.position;
         targ.z = 0f;
 
@@ -121,7 +160,8 @@ public class Boss : MonoBehaviour
         }else if (moving)
         {
             //will move until told that its shooting
-            transform.position += transform.right * 2 * Time.deltaTime;
+            FaceObject(selectedTrigger);
+            transform.position += transform.right * 10 * Time.deltaTime;
         }
     }
 }
