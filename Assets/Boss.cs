@@ -13,16 +13,24 @@ public class Boss : MonoBehaviour
 
     GameObject selectedTrigger;
 
+    public GameObject bullet;
+    public GameObject missile;
+
+
+    int bulletDelayCounter;
+
     int triggerHit;
 
     bool shooting;
     bool moving;
+    int shooter;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //WANT TO DELETE THE GAMEOBJECT HERE AND UPDATE THE SCORE
         if (collision.tag.Contains("TopLeftTrigger"))
         {
+            ChooseRandomShooter();
             triggerHit = 1;
             FaceObject(player);
             shooting = true;
@@ -33,6 +41,7 @@ public class Boss : MonoBehaviour
         }
         if (collision.tag.Contains("TopRightTrigger"))
         {
+            ChooseRandomShooter();
             triggerHit = 2;
             FaceObject(player);
             shooting = true;
@@ -41,6 +50,7 @@ public class Boss : MonoBehaviour
         }
         if (collision.tag.Contains("BottomLeftTrigger"))
         {
+            ChooseRandomShooter();
             triggerHit = 3;
             FaceObject(player);
             shooting = true;
@@ -49,6 +59,7 @@ public class Boss : MonoBehaviour
         }
         if (collision.tag.Contains("BottomRightTrigger"))
         {
+            ChooseRandomShooter();
             triggerHit = 4;
             FaceObject(player);
             shooting = true;
@@ -96,6 +107,8 @@ public class Boss : MonoBehaviour
 
         shooting = false;
         moving = true;
+
+        bulletDelayCounter = -1;
     }
 
     GameObject TriggerToFace(int rnd)
@@ -139,6 +152,67 @@ public class Boss : MonoBehaviour
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
 
+    //called as soon as boss faces the player
+    void ChooseRandomShooter()
+    {
+        System.Random rand = new System.Random();
+        int randomNumber = Random.Range(1, 3);
+
+        if(randomNumber == 1) //1 is bullets
+        {
+            shooter = 1;
+        }
+        else if(randomNumber == 2) //2 is missile
+        {
+            shooter = 2;
+        }
+        else
+        {
+            shooter = 1;
+        }
+    }
+
+    /*IEnumerator DelayBullet(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Shoot();
+    }*/
+
+    void Shoot()
+    {
+        if(shooter == 1)
+        {
+            SpawnBullet(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
+        }
+        else if(shooter == 2)
+        {
+            SpawnMissile(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
+        }
+    }
+
+    void SpawnBullet(float x, float y, float z)
+    {
+        Debug.Log("SPAWNING A BULLET " + gameObject.transform.position.x);
+        GameObject go = Instantiate(bullet);
+        float randX = Random.Range(-10f, 10f);
+        float randY = Random.Range(-10f, 10f);
+        //go.transform.position = new Vector3(randX, randY, randX);
+        go.transform.position = new Vector3(x, y, z);
+        //go.transform.GetChild(0).transform.localPosition = new Vector2(-0.1405144f, 0.5059581f);
+    }
+
+    void SpawnMissile(float x, float y, float z)
+    {
+        Debug.Log("SPAWNING A MISSILE " + gameObject.transform.position.x);
+        GameObject go = Instantiate(missile);
+        float randX = Random.Range(-10f, 10f);
+        float randY = Random.Range(-10f, 10f);
+        //go.transform.position = new Vector3(randX, randY, randX);
+        go.transform.position = new Vector3(x, y, z);
+        //go.transform.GetChild(0).transform.localPosition = new Vector2(-0.1405144f, 0.5059581f);
+    }
+
+    
     // Update is called once per frame
     void Update()
     {
@@ -155,7 +229,21 @@ public class Boss : MonoBehaviour
         //transform.position += transform.right * 2 * Time.deltaTime;
         if (shooting)
         {
+            
+            //StartCoroutine(DelayBullet(3f));
+            //Shoot();
             //follows the player if done in update
+            if(bulletDelayCounter == -1)
+            {
+                Shoot();
+            }else if(bulletDelayCounter == 60)
+            {
+                Shoot();
+                bulletDelayCounter = 0;
+            }
+
+            bulletDelayCounter += 1;
+
             FaceObject(player);
         }else if (moving)
         {
