@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletScript : MonoBehaviour
+public class MissileScript : MonoBehaviour
 {
-
     public GameObject player;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag.Contains("Player"))
         {
-            BossLevelPlayerScript.health -= 5;
+            BossLevelPlayerScript.health -= 13;
             DeathAudioManager.deathAudioSource.Play();
             Destroy(gameObject);
         }
@@ -22,7 +21,7 @@ public class BulletScript : MonoBehaviour
     {
         player = GameObject.Find("pablo-spritesheet_0");
         FacePlayer(player);
-        StartCoroutine(DelaySelfDestruct(10f));
+        StartCoroutine(DelaySelfDestruct(4f));
     }
 
     void FacePlayer(GameObject otf)
@@ -47,6 +46,7 @@ public class BulletScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += transform.right * 15 * Time.deltaTime;
+        FacePlayer(player);
+        transform.position += transform.right * 8 * Time.deltaTime;
     }
 }

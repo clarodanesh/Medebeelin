@@ -64,7 +64,7 @@ public class LevelManager : MonoBehaviour
         {
             //only if boss level
             BossLevelPlayerScript.health = 100;
-            BossLevelPlayerScript.speed = 7;
+            BossLevelPlayerScript.speed = 13;
         }
         
         NectarPickup.nectarValue = 1;
@@ -252,7 +252,14 @@ public class LevelManager : MonoBehaviour
 
         levelText.text = "Level: " + levelNumber;
         scoreText.text = "Score: " + score.ToString();
-        healthText.text = "Health: " + PlayerScript.health.ToString();
+        if (level == "BossLevel")
+        {
+            healthText.text = "Health: " + BossLevelPlayerScript.health.ToString();
+        }
+        else
+        {
+            healthText.text = "Health: " + PlayerScript.health.ToString();
+        }
 
         if(score > 70 && timesUpgraded < 1 && !updateIsShown)
         {
@@ -274,5 +281,6 @@ public class LevelManager : MonoBehaviour
         }
         Debug.Log("INTSCORE " + score);
         Debug.Log("from the level manager script " + NectarPickup.nectarValue);
+        Debug.Log("LEVEL NAME ::::::::::::::: ");
     }
 }

@@ -35,7 +35,13 @@ public class Boss : MonoBehaviour
             FaceObject(player);
             shooting = true;
             moving = false;
-            StartCoroutine(TurnToTrigger(10f));
+            if (shooter == 1 || shooter == 2)
+            {
+                StartCoroutine(TurnToTrigger(10f));
+            }else if(shooter == 3)
+            {
+                StartCoroutine(TurnToTrigger(5f));
+            }
             //after boss has shot the projectiles it moves to the next object first by facing it
             //FaceObject(topRightTrigger);
         }
@@ -46,7 +52,14 @@ public class Boss : MonoBehaviour
             FaceObject(player);
             shooting = true;
             moving = false;
-            StartCoroutine(TurnToTrigger(10f));
+            if (shooter == 1 || shooter == 2)
+            {
+                StartCoroutine(TurnToTrigger(10f));
+            }
+            else if (shooter == 3)
+            {
+                StartCoroutine(TurnToTrigger(5f));
+            }
         }
         if (collision.tag.Contains("BottomLeftTrigger"))
         {
@@ -55,7 +68,14 @@ public class Boss : MonoBehaviour
             FaceObject(player);
             shooting = true;
             moving = false;
-            StartCoroutine(TurnToTrigger(10f));
+            if (shooter == 1 || shooter == 2)
+            {
+                StartCoroutine(TurnToTrigger(10f));
+            }
+            else if (shooter == 3)
+            {
+                StartCoroutine(TurnToTrigger(5f));
+            }
         }
         if (collision.tag.Contains("BottomRightTrigger"))
         {
@@ -64,7 +84,14 @@ public class Boss : MonoBehaviour
             FaceObject(player);
             shooting = true;
             moving = false;
-            StartCoroutine(TurnToTrigger(10f));
+            if (shooter == 1 || shooter == 2)
+            {
+                StartCoroutine(TurnToTrigger(10f));
+            }
+            else if (shooter == 3)
+            {
+                StartCoroutine(TurnToTrigger(5f));
+            }
         }
     }
 
@@ -107,6 +134,7 @@ public class Boss : MonoBehaviour
 
         shooting = false;
         moving = true;
+        shooter = 3;
 
         bulletDelayCounter = -1;
     }
@@ -158,18 +186,26 @@ public class Boss : MonoBehaviour
         System.Random rand = new System.Random();
         int randomNumber = Random.Range(1, 3);
 
-        if(randomNumber == 1) //1 is bullets
+        if (shooter == 3)
         {
-            shooter = 1;
+            if (randomNumber == 1) //1 is bullets
+            {
+                shooter = 1;
+            }
+            else if (randomNumber == 2) //2 is missile
+            {
+                shooter = 2;
+            }
+            else
+            {
+                shooter = 1;
+            }
         }
-        else if(randomNumber == 2) //2 is missile
+        else if(shooter == 1 || shooter == 2)
         {
-            shooter = 2;
+            shooter = 3;
         }
-        else
-        {
-            shooter = 1;
-        }
+        
     }
 
     /*IEnumerator DelayBullet(float delay)
@@ -187,6 +223,10 @@ public class Boss : MonoBehaviour
         else if(shooter == 2)
         {
             SpawnMissile(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
+        }
+        else if(shooter == 3)
+        {
+
         }
     }
 
@@ -227,22 +267,51 @@ public class Boss : MonoBehaviour
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));*/
 
         //transform.position += transform.right * 2 * Time.deltaTime;
+        Debug.Log("SHOOTER VALUEEEEEEEE ::::::::::::: " + shooter);
         if (shooting)
         {
-            
+
             //StartCoroutine(DelayBullet(3f));
             //Shoot();
             //follows the player if done in update
-            if(bulletDelayCounter == -1)
+            if (shooter == 1)
             {
-                Shoot();
-            }else if(bulletDelayCounter == 60)
-            {
-                Shoot();
-                bulletDelayCounter = 0;
-            }
+                if (bulletDelayCounter == -1)
+                {
+                    Shoot();
+                }
+                else if (bulletDelayCounter == 30)
+                {
+                    Shoot();
+                    bulletDelayCounter = 0;
+                }
+                else if (bulletDelayCounter > 30)
+                {
+                    Shoot();
+                    bulletDelayCounter = 0;
+                }
 
-            bulletDelayCounter += 1;
+                bulletDelayCounter += 1;
+            }
+            else if(shooter == 2)
+            {
+                if (bulletDelayCounter == -1)
+                {
+                    Shoot();
+                }
+                else if (bulletDelayCounter == 90)
+                {
+                    Shoot();
+                    bulletDelayCounter = 0;
+                }
+                else if (bulletDelayCounter > 90)
+                {
+                    Shoot();
+                    bulletDelayCounter = 0;
+                }
+
+                bulletDelayCounter += 1;
+            }
 
             FaceObject(player);
         }else if (moving)
