@@ -9,7 +9,7 @@ public class LevelManager : MonoBehaviour
     public static int score;
     public static string level;
     public static string instructionTextValue;
-    public Text levelText, scoreText, healthText;
+    public Text levelText, scoreText, healthText, bossHealthText;
     public string levelNumber;
     public Button randomBtn, healthBtn, speedBtn, scoreBtn;
     public GameObject messagePanel;
@@ -47,11 +47,13 @@ public class LevelManager : MonoBehaviour
         GameObject levelNameGO = GameObject.Find("LevelText");
         GameObject scoreTextGO = GameObject.Find("ScoreText");
         GameObject healthTextGO = GameObject.Find("HealthText");
+        GameObject bossHealthTextGO = GameObject.Find("BossHealthText");
 
         //Get the GUIText Component attached to that GameObject named Best
         levelText = levelNameGO.GetComponent<Text>();
         scoreText = scoreTextGO.GetComponent<Text>();
         healthText = healthTextGO.GetComponent<Text>();
+        bossHealthText = bossHealthTextGO.GetComponent<Text>();
 
         GetLevelNumber(level);
 
@@ -255,6 +257,7 @@ public class LevelManager : MonoBehaviour
         if (level == "BossLevel")
         {
             healthText.text = "Health: " + BossLevelPlayerScript.health.ToString();
+            bossHealthText.text = "Boss Health: " + Boss.bossHealth.ToString();
         }
         else
         {

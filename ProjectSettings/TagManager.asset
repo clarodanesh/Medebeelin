@@ -11,6 +11,7 @@ TagManager:
   - TopRightTrigger
   - BottomLeftTrigger
   - BottomRightTrigger
+  - Boss
   layers:
   - Default
   - TransparentFX

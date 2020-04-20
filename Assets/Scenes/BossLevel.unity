@@ -83626,7 +83626,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &43970585
 GameObject:
@@ -84494,6 +84494,7 @@ RectTransform:
   - {fileID: 2115741575}
   - {fileID: 1283560294}
   - {fileID: 1682510559}
+  - {fileID: 630961036}
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -85433,6 +85434,85 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 566121787}
+  m_CullTransparentMesh: 0
+--- !u!1 &630961035
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 630961036}
+  - component: {fileID: 630961038}
+  - component: {fileID: 630961037}
+  m_Layer: 5
+  m_Name: BossHealthText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &630961036
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 630961035}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 419508372}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 7, y: -133.9}
+  m_SizeDelta: {x: 307.8, y: 58.2}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &630961037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 630961035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0.9407511, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: c9f6d0e7bc8541498c9a4799ba184ede, type: 3}
+    m_FontSize: 30
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 3
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'Boss Health:'
+--- !u!222 &630961038
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 630961035}
   m_CullTransparentMesh: 0
 --- !u!1 &633413597
 GameObject:
@@ -116660,9 +116740,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb6dee5d891f6a64595e887c7bb14609, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelText: {fileID: 0}
-  scoreText: {fileID: 0}
-  healthText: {fileID: 0}
+  levelText: {fileID: 1855959596}
+  scoreText: {fileID: 433612848}
+  healthText: {fileID: 290154017}
+  bossHealthText: {fileID: 0}
   levelNumber: 
   randomBtn: {fileID: 633413598}
   healthBtn: {fileID: 453412753}
@@ -116690,7 +116771,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1029133917
 GameObject:
@@ -121481,7 +121562,7 @@ Transform:
   - {fileID: 1029133918}
   - {fileID: 484378927}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &1030856934
 CircleCollider2D:
@@ -121612,6 +121693,8 @@ MonoBehaviour:
   upLeftAnim: {fileID: 9100000, guid: 5e98b02843006944eb48eb146139cae6, type: 2}
   upStoppedRight: {fileID: 9100000, guid: f87c27f4bbba58a4294e706b1e0a9c8f, type: 2}
   upStoppedLeft: {fileID: 9100000, guid: 95607d343ae51a7489fad94787eac63c, type: 2}
+  playerBullet: {fileID: 6645403414155329522, guid: bba33dbd38604aa49a36080217c53e03,
+    type: 3}
 --- !u!1 &1137336514
 GameObject:
   m_ObjectHideFlags: 0
@@ -121707,7 +121790,7 @@ GameObject:
   - component: {fileID: 1178102804}
   m_Layer: 0
   m_Name: BossUp_0
-  m_TagString: Untagged
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -121849,7 +121932,7 @@ MonoBehaviour:
   bottomLeftTrigger: {fileID: 970693408}
   bottomRightTrigger: {fileID: 1376709622}
   bullet: {fileID: 5174185593061948464, guid: 4702a3868e425d343abfb41c1bda0052, type: 3}
-  missile: {fileID: 5174185593061948464, guid: 4702a3868e425d343abfb41c1bda0052, type: 3}
+  missile: {fileID: 4387649752259566094, guid: b9b1f69a50074c147938e0494501dea4, type: 3}
 --- !u!1 &1205902838
 GameObject:
   m_ObjectHideFlags: 0
@@ -123330,7 +123413,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1921832518
 GameObject:

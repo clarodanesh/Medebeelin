@@ -22,6 +22,8 @@ public class BossLevelPlayerScript : MonoBehaviour
     public RuntimeAnimatorController upStoppedRight;
     public RuntimeAnimatorController upStoppedLeft;
 
+    public GameObject playerBullet;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.tag == "Enemy")
@@ -72,6 +74,26 @@ public class BossLevelPlayerScript : MonoBehaviour
             SceneManager.LoadScene("GameOver");
         }
     }
+
+    void SpawnBullet(float x, float y, float z)
+    {
+        Debug.Log("SPAWNING A BULLET " + gameObject.transform.position.x);
+        GameObject go = Instantiate(playerBullet);
+        float randX = Random.Range(-10f, 10f);
+        float randY = Random.Range(-10f, 10f);
+        //go.transform.position = new Vector3(randX, randY, randX);
+        go.transform.position = new Vector3(x, y, z);
+        //go.transform.GetChild(0).transform.localPosition = new Vector2(-0.1405144f, 0.5059581f);
+    }
+
+    /*void AimAtMouse()
+    {
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = 0;
+        float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
+        //angle -= 90;
+        transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+    }*/
 
     // Update is called once per frame
     void Update()
@@ -158,6 +180,10 @@ public class BossLevelPlayerScript : MonoBehaviour
             //PlayerAudioManagerScript.playerAudioSource.Play();
             //isGrounded = false;
         }
+        if (Input.GetMouseButtonDown(0))
+        {
+            SpawnBullet(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
+        }
         if (Input.anyKey == false)
         {
             Debug.Log("NO KEYS DOWN");
@@ -188,7 +214,7 @@ public class BossLevelPlayerScript : MonoBehaviour
         Debug.Log("SPEED" + speed);
         Debug.Log("TRANSFORM RIGHT" + gameObject.transform.right);
         Debug.Log("VELOCITY" + playerRigidBody.velocity);
-
+        //AimAtMouse();
         CheckPlayerHealth();
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class Boss : MonoBehaviour
 {
     Rigidbody2D rb;
+    public static int bossHealth;
     public GameObject player;
     public GameObject topLeftTrigger;
     public GameObject topRightTrigger;
@@ -23,7 +24,7 @@ public class Boss : MonoBehaviour
 
     bool shooting;
     bool moving;
-    int shooter;
+    public static int shooter;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -129,6 +130,8 @@ public class Boss : MonoBehaviour
 
         float angle = Mathf.Atan2(targ.y, targ.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));*/
+        bossHealth = 400;
+
         FaceObject(topRightTrigger);
 
 
@@ -267,7 +270,7 @@ public class Boss : MonoBehaviour
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));*/
 
         //transform.position += transform.right * 2 * Time.deltaTime;
-        Debug.Log("SHOOTER VALUEEEEEEEE ::::::::::::: " + shooter);
+        Debug.Log("SHOOTER VALUE ::::::::::::: " + shooter);
         if (shooting)
         {
 
