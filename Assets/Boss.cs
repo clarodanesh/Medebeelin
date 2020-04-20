@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Boss : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class Boss : MonoBehaviour
     public GameObject topRightTrigger;
     public GameObject bottomLeftTrigger;
     public GameObject bottomRightTrigger;
+    
 
     GameObject selectedTrigger;
 
@@ -255,22 +257,18 @@ public class Boss : MonoBehaviour
         //go.transform.GetChild(0).transform.localPosition = new Vector2(-0.1405144f, 0.5059581f);
     }
 
-    
+    void CheckBossHealth()
+    {
+        if (bossHealth <= 0)
+        {
+            Destroy(gameObject);
+            SceneManager.LoadScene("GameFinished");
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
-        /*Vector3 targ = player.transform.position;
-        targ.z = 0f;
-
-        Vector3 objectPos = transform.position;
-        targ.x = targ.x - objectPos.x;
-        targ.y = targ.y - objectPos.y;
-
-        float angle = Mathf.Atan2(targ.y, targ.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));*/
-
-        //transform.position += transform.right * 2 * Time.deltaTime;
-        Debug.Log("SHOOTER VALUE ::::::::::::: " + shooter);
         if (shooting)
         {
 

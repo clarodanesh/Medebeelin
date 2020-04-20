@@ -19,6 +19,9 @@ public class LevelManager : MonoBehaviour
     public GameObject customiseCharacterBtn;
     public GameObject customiseCharacterMenu;
     public GameObject instructionText;
+
+    public GameObject attackText;
+    public GameObject evadeText;
     public static string spriteType;
     public int timesUpgraded;
     public int dismissIncrement;
@@ -40,6 +43,9 @@ public class LevelManager : MonoBehaviour
         upgradeMenuPanel.gameObject.SetActive(false);
         customiseCharacterBtn.gameObject.SetActive(false);
         customiseCharacterMenu.gameObject.SetActive(false);
+
+        attackText.gameObject.SetActive(false);
+        evadeText.gameObject.SetActive(false);
 
         level = SceneManager.GetActiveScene().name;
 
