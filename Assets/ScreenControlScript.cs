@@ -25,6 +25,13 @@ public class ScreenControlScript : MonoBehaviour
     }
 
     [System.Serializable]
+    public class HighScore
+    {
+        public string uname;
+        public int score;
+    }
+
+    [System.Serializable]
     public class DataTable
     {
         public List<DataRetrieved> progressData;
@@ -168,6 +175,39 @@ public class ScreenControlScript : MonoBehaviour
     public void OpenMainMenu()
     {
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public void UploadHighScore()
+    {
+        DataToSend progressData = new DataToSend();
+        progressData.score = PlayerPrefs.GetInt("score");
+        progressData.uname = PlayerPrefs.GetString("username");
+        string jsonData = JsonUtility.ToJson(progressData);
+
+        StartCoroutine(PostHS("https://vesta.uclan.ac.uk/~diqbal/UnityScripts/saveHS.php", jsonData));
+
+        SceneManager.LoadScene("HighScores");
+    }
+
+    IEnumerator PostHS(string url, string json)
+    {
+        var uwr = new UnityWebRequest(url, "POST");
+        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
+        uwr.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
+        uwr.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+        uwr.SetRequestHeader("Content-Type", "application/json");
+
+        yield return uwr.SendWebRequest();
+        if (uwr.isNetworkError)
+        {
+            Debug.Log("error sending request");
+        }
+        else
+        {
+            Debug.Log("Received: " + uwr.downloadHandler.text);
+            
+            Debug.Log(uwr.downloadHandler.text);
+        }
     }
 
     // Start is called before the first frame updates
