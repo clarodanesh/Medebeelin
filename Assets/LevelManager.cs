@@ -283,6 +283,7 @@ public class LevelManager : MonoBehaviour
         public int health;
         public int speed;
         public int nectarpoints;
+        public int bosshealth;
     }
 
     public void SaveGame()
@@ -309,11 +310,14 @@ public class LevelManager : MonoBehaviour
             progressData.health = PlayerScript.health;
             progressData.uname = PlayerPrefs.GetString("username");
             progressData.speed = PlayerScript.speed;
-        }else if(level == "BossLevel")
+            PlayerPrefs.SetInt("bosshealth", PlayerPrefs.GetInt("bosshealth"));
+        }
+        else if(level == "BossLevel")
         {
             progressData.health = BossLevelPlayerScript.health;
             progressData.uname = PlayerPrefs.GetString("username");
             progressData.speed = BossLevelPlayerScript.speed;
+            progressData.bosshealth = Boss.bossHealth;
         }
         progressData.nectarpoints = NectarPickup.nectarValue;
         string jsonData = JsonUtility.ToJson(progressData);
@@ -325,6 +329,7 @@ public class LevelManager : MonoBehaviour
         PlayerPrefs.SetInt("health", progressData.health);
         PlayerPrefs.SetInt("speed", progressData.speed);
         PlayerPrefs.SetInt("nectarpoints", progressData.nectarpoints);
+        PlayerPrefs.SetInt("bosshealth", progressData.bosshealth);
 
         StartCoroutine(PostRequestJSON("https://vesta.uclan.ac.uk/~diqbal/UnityScripts/saveData.php", jsonData));
     }

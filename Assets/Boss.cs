@@ -132,7 +132,7 @@ public class Boss : MonoBehaviour
 
         float angle = Mathf.Atan2(targ.y, targ.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));*/
-        bossHealth = 400;
+        bossHealth = PlayerPrefs.GetInt("bosshealth");
 
         FaceObject(topRightTrigger);
 

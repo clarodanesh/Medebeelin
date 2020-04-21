@@ -19,6 +19,7 @@ public class LevelLoadScript : MonoBehaviour
                 PlayerPrefs.SetInt("health", PlayerScript.health);
                 PlayerPrefs.SetInt("speed", PlayerScript.speed);
                 PlayerPrefs.SetInt("nectarpoints", NectarPickup.nectarValue);
+                PlayerPrefs.SetInt("bosshealth", PlayerPrefs.GetInt("bosshealth"));
 
                 SceneManager.LoadScene("Level2");
             }
@@ -31,6 +32,7 @@ public class LevelLoadScript : MonoBehaviour
                 PlayerPrefs.SetInt("health", PlayerScript.health);
                 PlayerPrefs.SetInt("speed", PlayerScript.speed);
                 PlayerPrefs.SetInt("nectarpoints", NectarPickup.nectarValue);
+                PlayerPrefs.SetInt("bosshealth", PlayerPrefs.GetInt("bosshealth"));
 
                 SceneManager.LoadScene("BossLevel");
             }

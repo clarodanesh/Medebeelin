@@ -20,14 +20,14 @@ if($s->rowCount() > 0){
             $sql = "DELETE FROM UnityProgress WHERE username='$data->uname'";
             $dbconn->exec($sql);
 
-            $sql = "INSERT INTO UnityProgress (skin, upgrade, level, score, health, username, speed, nectarpoints) VALUES ('$data->skin', '$data->upgrade', '$data->level', '$data->score', '$data->health', '$data->uname', '$data->speed', '$data->nectarpoints')";
+            $sql = "INSERT INTO UnityProgress (skin, upgrade, level, score, health, username, speed, nectarpoints, bosshealth) VALUES ('$data->skin', '$data->upgrade', '$data->level', '$data->score', '$data->health', '$data->uname', '$data->speed', '$data->nectarpoints', '$data->bosshealth')";
 
             $dbconn->exec($sql);
         }
         //echo $row['id'];
     }
 }else if($s->rowCount() == 0){
-    $sql = "INSERT INTO UnityProgress (skin, upgrade, level, score, health, username, speed, nectarpoints) VALUES ('$data->skin', '$data->upgrade', '$data->level', '$data->score', '$data->health', '$data->uname', '$data->speed', '$data->nectarpoints')";
+    $sql = "INSERT INTO UnityProgress (skin, upgrade, level, score, health, username, speed, nectarpoints, bosshealth) VALUES ('$data->skin', '$data->upgrade', '$data->level', '$data->score', '$data->health', '$data->uname', '$data->speed', '$data->nectarpoints', '$data->bosshealth')";
 
     $dbconn->exec($sql);
     echo "done";

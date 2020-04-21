@@ -21,6 +21,7 @@ public class ScreenControlScript : MonoBehaviour
         public int health;
         public int speed;
         public int nectarpoints;
+        public int bosshealth;
     }
 
     [System.Serializable]
@@ -41,6 +42,7 @@ public class ScreenControlScript : MonoBehaviour
         public string username;
         public int speed;
         public int nectarpoints;
+        public int bosshealth;
     }
 
     [System.Serializable]
@@ -61,6 +63,7 @@ public class ScreenControlScript : MonoBehaviour
         progressData.uname = PlayerPrefs.GetString("username");
         progressData.speed = 7;
         progressData.nectarpoints = 1;
+        progressData.bosshealth = 400;
         string jsonData = JsonUtility.ToJson(progressData);
 
         PlayerPrefs.SetString("level", progressData.level);
@@ -70,6 +73,7 @@ public class ScreenControlScript : MonoBehaviour
         PlayerPrefs.SetInt("health", progressData.health);
         PlayerPrefs.SetInt("speed", progressData.speed);
         PlayerPrefs.SetInt("nectarpoints", progressData.nectarpoints);
+        PlayerPrefs.SetInt("bosshealth", progressData.bosshealth);
 
         StartCoroutine(PostRequestJSON("https://vesta.uclan.ac.uk/~diqbal/UnityScripts/saveData.php", jsonData));
     }
@@ -128,6 +132,7 @@ public class ScreenControlScript : MonoBehaviour
                 Debug.Log(pd.progressData[0].username);
                 Debug.Log(pd.progressData[0].speed);
                 Debug.Log(pd.progressData[0].nectarpoints);
+                Debug.Log(pd.progressData[0].bosshealth);
                 Debug.Log("----------------------");
 
                 PlayerPrefs.SetString("level", pd.progressData[0].level);
@@ -137,6 +142,7 @@ public class ScreenControlScript : MonoBehaviour
                 PlayerPrefs.SetInt("health", pd.progressData[0].health);
                 PlayerPrefs.SetInt("speed", pd.progressData[0].speed);
                 PlayerPrefs.SetInt("nectarpoints", pd.progressData[0].nectarpoints);
+                PlayerPrefs.SetInt("bosshealth", pd.progressData[0].bosshealth);
 
                 SceneManager.LoadScene(pd.progressData[0].level);
             }
