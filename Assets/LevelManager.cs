@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
 public class LevelManager : MonoBehaviour
 {
@@ -20,14 +21,25 @@ public class LevelManager : MonoBehaviour
     public GameObject customiseCharacterMenu;
     public GameObject instructionText;
 
+    public GameObject gameMenuPanel;
+
+    public GameObject showMenuBtnObj;
+    public GameObject saveBtnObj;
+    public GameObject quitBtnObj;
+    Button btn;
+    Button saveBtn;
+    Button quitBtn;
+
     GameObject attackText;
     GameObject evadeText;
     public static string spriteType;
-    public int timesUpgraded;
+    public static int timesUpgraded;
     public int dismissIncrement;
     int clipPlayedAmount;
     static public bool showInstruction;
     public bool updateIsShown;
+
+    bool saved;
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +55,11 @@ public class LevelManager : MonoBehaviour
         upgradeMenuPanel.gameObject.SetActive(false);
         customiseCharacterBtn.gameObject.SetActive(false);
         customiseCharacterMenu.gameObject.SetActive(false);
+        gameMenuPanel.gameObject.SetActive(false);
+
+        showMenuBtnObj = GameObject.Find("ShowGameMenuBtn");
+        btn = showMenuBtnObj.GetComponent<Button>();
+        showMenuBtnObj.gameObject.SetActive(true);
 
         //attackText.gameObject.SetActive(false);
         //evadeText.gameObject.SetActive(false);
@@ -67,7 +84,7 @@ public class LevelManager : MonoBehaviour
         {
             LevelManager.score = PlayerPrefs.GetInt("score");
             PlayerScript.health = PlayerPrefs.GetInt("health");
-            PlayerScript.speed = 7;
+            PlayerScript.speed = PlayerPrefs.GetInt("speed");
         }
         else if (level == "BossLevel")
         {
@@ -78,9 +95,9 @@ public class LevelManager : MonoBehaviour
             BossLevelPlayerScript.speed = 13;
         }
         
-        NectarPickup.nectarValue = 1;
+        NectarPickup.nectarValue = PlayerPrefs.GetInt("nectarpoints");
         dismissIncrement = 100;
-        timesUpgraded = 0;
+        timesUpgraded = PlayerPrefs.GetInt("upgrade");
         clipPlayedAmount = 0;
         showInstruction = false;
         updateIsShown = false;
@@ -253,6 +270,99 @@ public class LevelManager : MonoBehaviour
     void DismissInstruction()
     {
         instructionPanel.gameObject.SetActive(false);
+    }
+
+    [System.Serializable]
+    public class DataToSend
+    {
+        public string uname;
+        public string skin;
+        public int upgrade;
+        public string level;
+        public int score;
+        public int health;
+        public int speed;
+        public int nectarpoints;
+    }
+
+    public void SaveGame()
+    {
+
+        /*
+         * 
+         * PlayerPrefs.SetString("level", "Level2");
+                PlayerPrefs.SetInt("upgrade", LevelManager.timesUpgraded);
+                PlayerPrefs.SetString("skin", LevelManager.spriteType);
+                PlayerPrefs.SetInt("score", LevelManager.score);
+                PlayerPrefs.SetInt("health", PlayerScript.health);
+                PlayerPrefs.SetInt("speed", PlayerScript.speed);
+                PlayerPrefs.SetInt("nectarpoints", NectarPickup.nectarValue);
+         */
+
+        DataToSend progressData = new DataToSend();
+        progressData.skin = LevelManager.spriteType;
+        progressData.upgrade = LevelManager.timesUpgraded;
+        progressData.level = level;
+        progressData.score = LevelManager.score;
+        if (level == "Level1" || level == "Level2")
+        {
+            progressData.health = PlayerScript.health;
+            progressData.uname = PlayerPrefs.GetString("username");
+            progressData.speed = PlayerScript.speed;
+        }else if(level == "BossLevel")
+        {
+            progressData.health = BossLevelPlayerScript.health;
+            progressData.uname = PlayerPrefs.GetString("username");
+            progressData.speed = BossLevelPlayerScript.speed;
+        }
+        progressData.nectarpoints = NectarPickup.nectarValue;
+        string jsonData = JsonUtility.ToJson(progressData);
+
+        PlayerPrefs.SetString("level", progressData.level);
+        PlayerPrefs.SetInt("upgrade", progressData.upgrade);
+        PlayerPrefs.SetString("skin", progressData.skin);
+        PlayerPrefs.SetInt("score", progressData.score);
+        PlayerPrefs.SetInt("health", progressData.health);
+        PlayerPrefs.SetInt("speed", progressData.speed);
+        PlayerPrefs.SetInt("nectarpoints", progressData.nectarpoints);
+
+        StartCoroutine(PostRequestJSON("https://vesta.uclan.ac.uk/~diqbal/UnityScripts/saveData.php", jsonData));
+    }
+
+    IEnumerator PostRequestJSON(string url, string json)
+    {
+        var uwr = new UnityWebRequest(url, "POST");
+        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
+        uwr.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
+        uwr.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+        uwr.SetRequestHeader("Content-Type", "application/json");
+
+        yield return uwr.SendWebRequest();
+        if (uwr.isNetworkError)
+        {
+            Debug.Log("error sending request");
+        }
+        else
+        {
+            Debug.Log("Received: " + uwr.downloadHandler.text);
+        }
+    }
+
+    public void CloseGameMenu()
+    {
+        gameMenuPanel.gameObject.SetActive(false);
+        showMenuBtnObj.gameObject.SetActive(true);
+    }
+
+    public void QuitGame()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void ShowGameMenu()
+    {
+        gameMenuPanel.gameObject.SetActive(true);
+        showMenuBtnObj.gameObject.SetActive(false);
     }
 
     // Update is called once per frame

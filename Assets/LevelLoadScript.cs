@@ -12,10 +12,26 @@ public class LevelLoadScript : MonoBehaviour
         {
             if (LevelManager.level == "Level1")
             {
+                PlayerPrefs.SetString("level", "Level2");
+                PlayerPrefs.SetInt("upgrade", LevelManager.timesUpgraded);
+                PlayerPrefs.SetString("skin", LevelManager.spriteType);
+                PlayerPrefs.SetInt("score", LevelManager.score);
+                PlayerPrefs.SetInt("health", PlayerScript.health);
+                PlayerPrefs.SetInt("speed", PlayerScript.speed);
+                PlayerPrefs.SetInt("nectarpoints", NectarPickup.nectarValue);
+
                 SceneManager.LoadScene("Level2");
             }
             else if (LevelManager.level == "Level2")
             {
+                PlayerPrefs.SetString("level", "BossLevel");
+                PlayerPrefs.SetInt("upgrade", LevelManager.timesUpgraded);
+                PlayerPrefs.SetString("skin", LevelManager.spriteType);
+                PlayerPrefs.SetInt("score", LevelManager.score);
+                PlayerPrefs.SetInt("health", PlayerScript.health);
+                PlayerPrefs.SetInt("speed", PlayerScript.speed);
+                PlayerPrefs.SetInt("nectarpoints", NectarPickup.nectarValue);
+
                 SceneManager.LoadScene("BossLevel");
             }
             else

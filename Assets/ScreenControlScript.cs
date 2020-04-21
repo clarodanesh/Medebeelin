@@ -54,7 +54,7 @@ public class ScreenControlScript : MonoBehaviour
         SceneManager.LoadScene("Level1");
         DataToSend progressData = new DataToSend();
         progressData.skin = "normal";
-        progressData.upgrade = 1;
+        progressData.upgrade = 0;
         progressData.level = "Level1";
         progressData.score = 0;
         progressData.health = 100;
