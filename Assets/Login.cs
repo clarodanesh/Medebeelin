@@ -58,6 +58,7 @@ public class Login : MonoBehaviour
             else if(uwr.downloadHandler.text == "done")
             {
                 SceneManager.LoadScene("MainMenu");
+                PlayerPrefs.SetString("username", unameIF.text);
             }
         }
     }

@@ -5,10 +5,12 @@ using UnityEngine.Networking;
 
 public class ServerConnectScript : MonoBehaviour
 {
+    string uname;
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(PostRequest("https://vesta.uclan.ac.uk/~diqbal/UnityLab/scores.php"));
+        uname = PlayerPrefs.GetString("username");
     }
 
     IEnumerator PostRequest(string uri)
@@ -32,6 +34,6 @@ public class ServerConnectScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Debug.Log("uname" + uname);
     }
 }

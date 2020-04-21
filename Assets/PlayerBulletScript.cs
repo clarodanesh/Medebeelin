@@ -15,7 +15,7 @@ public class PlayerBulletScript : MonoBehaviour
                 
             }else if (Boss.shooter == 3)
             {
-                Boss.bossHealth -= 1;
+                Boss.bossHealth -= 3;
             }
             DeathAudioManager.deathAudioSource.Play();
             Destroy(gameObject);

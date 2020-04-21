@@ -20,8 +20,8 @@ public class LevelManager : MonoBehaviour
     public GameObject customiseCharacterMenu;
     public GameObject instructionText;
 
-    public GameObject attackText;
-    public GameObject evadeText;
+    GameObject attackText;
+    GameObject evadeText;
     public static string spriteType;
     public int timesUpgraded;
     public int dismissIncrement;
@@ -44,8 +44,8 @@ public class LevelManager : MonoBehaviour
         customiseCharacterBtn.gameObject.SetActive(false);
         customiseCharacterMenu.gameObject.SetActive(false);
 
-        attackText.gameObject.SetActive(false);
-        evadeText.gameObject.SetActive(false);
+        //attackText.gameObject.SetActive(false);
+        //evadeText.gameObject.SetActive(false);
 
         level = SceneManager.GetActiveScene().name;
 
@@ -59,19 +59,22 @@ public class LevelManager : MonoBehaviour
         levelText = levelNameGO.GetComponent<Text>();
         scoreText = scoreTextGO.GetComponent<Text>();
         healthText = healthTextGO.GetComponent<Text>();
-        bossHealthText = bossHealthTextGO.GetComponent<Text>();
+       
 
         GetLevelNumber(level);
 
         if (level == "Level1" || level == "Level2")
         {
-            PlayerScript.health = 100;
+            LevelManager.score = PlayerPrefs.GetInt("score");
+            PlayerScript.health = PlayerPrefs.GetInt("health");
             PlayerScript.speed = 7;
         }
         else if (level == "BossLevel")
         {
             //only if boss level
-            BossLevelPlayerScript.health = 100;
+            bossHealthText = bossHealthTextGO.GetComponent<Text>();
+            LevelManager.score = PlayerPrefs.GetInt("score");
+            BossLevelPlayerScript.health = PlayerPrefs.GetInt("health");
             BossLevelPlayerScript.speed = 13;
         }
         
@@ -81,7 +84,7 @@ public class LevelManager : MonoBehaviour
         clipPlayedAmount = 0;
         showInstruction = false;
         updateIsShown = false;
-        spriteType = "normal";
+        spriteType = PlayerPrefs.GetString("skin");
         randomBtn.interactable = false;
         healthBtn.interactable = false;
         speedBtn.interactable = false;

@@ -321,5 +321,7 @@ public class Boss : MonoBehaviour
             FaceObject(selectedTrigger);
             transform.position += transform.right * 10 * Time.deltaTime;
         }
+
+        CheckBossHealth();
     }
 }
