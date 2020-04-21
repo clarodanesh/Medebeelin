@@ -161,7 +161,10 @@ public class ScreenControlScript : MonoBehaviour
         SceneManager.LoadScene("Instructions");
     }
 
-    
+    public void OpenHS()
+    {
+        SceneManager.LoadScene("HighScores");
+    }
 
     public void ResumeGame()
     {
@@ -186,7 +189,7 @@ public class ScreenControlScript : MonoBehaviour
 
         StartCoroutine(PostHS("https://vesta.uclan.ac.uk/~diqbal/UnityScripts/saveHS.php", jsonData));
 
-        SceneManager.LoadScene("HighScores");
+        OpenHS();
     }
 
     IEnumerator PostHS(string url, string json)

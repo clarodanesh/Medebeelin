@@ -47,7 +47,7 @@ public class GetHighScores : MonoBehaviour
             Debug.Log(hsd.hsData[0].score);
             Debug.Log("----------------------");
 
-            highScoreText.GetComponent<Text>().text = hsd.hsData[0].username + "\t\t" + hsd.hsData[0].score + "\n" + hsd.hsData[1].username + "\t\t" + hsd.hsData[1].score + "\n" + hsd.hsData[2].username + "\t\t" + hsd.hsData[2].score + "\n" + hsd.hsData[3].username + "\t\t" + hsd.hsData[3].score + "\n" + hsd.hsData[4].username + "\t\t" + hsd.hsData[4].score + "\n";
+            highScoreText.GetComponent<Text>().text = "1: " + hsd.hsData[0].username + "\t\t" + hsd.hsData[0].score + "\n" + "2: " + hsd.hsData[1].username + "\t\t" + hsd.hsData[1].score + "\n" + "3: " + hsd.hsData[2].username + "\t\t" + hsd.hsData[2].score + "\n" + "4: " + hsd.hsData[3].username + "\t\t" + hsd.hsData[3].score + "\n" + "5: " + hsd.hsData[4].username + "\t\t" + hsd.hsData[4].score + "\n";
         }
     }
 
