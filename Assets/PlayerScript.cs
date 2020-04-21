@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 
 public class PlayerScript : MonoBehaviour
@@ -68,6 +69,7 @@ public class PlayerScript : MonoBehaviour
         if(health <= 0)
         {
             RemovePlayerHealth();
+
             Destroy(gameObject);
             SceneManager.LoadScene("GameOver");
         }

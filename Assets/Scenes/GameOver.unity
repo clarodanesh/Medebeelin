@@ -357,6 +357,7 @@ GameObject:
   m_Component:
   - component: {fileID: 653447042}
   - component: {fileID: 653447041}
+  - component: {fileID: 653447043}
   m_Layer: 0
   m_Name: GameOverManager
   m_TagString: Untagged
@@ -376,6 +377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dcc7c5f5fb1dcf4db47f0578d9f4830, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rbtn: {fileID: 0}
 --- !u!4 &653447042
 Transform:
   m_ObjectHideFlags: 0
@@ -390,6 +392,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &653447043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653447040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3c721146237c8542a130274d0e80e08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &728391023
 GameObject:
   m_ObjectHideFlags: 0
@@ -464,6 +478,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dcc7c5f5fb1dcf4db47f0578d9f4830, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rbtn: {fileID: 0}
 --- !u!81 &728391026
 AudioListener:
   m_ObjectHideFlags: 0
