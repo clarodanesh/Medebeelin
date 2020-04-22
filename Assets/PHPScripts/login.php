@@ -15,7 +15,10 @@ $s = $dbconn->query("SELECT id, password FROM UnityLogin WHERE username='$data->
 
 if($s->rowCount() > 0){
     while($row = $s->fetch()){
-        if($data->pass == $row['password']){
+        if($data->pass == "facebookLogin"){
+            "done";
+        }
+        else if($data->pass == $row['password']){
             echo "done";
         }else{
             echo "user already exists";
@@ -23,7 +26,11 @@ if($s->rowCount() > 0){
         //echo $row['id'];
     }
 }else if($s->rowCount() == 0){
-    $sql = "INSERT INTO UnityLogin (username, password) VALUES ('$data->uname', '$data->pass')";
+    if($data->pass == "facebookLogin"){
+        $sql = "INSERT INTO UnityLogin (username) VALUES ('$data->uname')";
+    }else{
+        $sql = "INSERT INTO UnityLogin (username, password) VALUES ('$data->uname', '$data->pass')";
+    }
 
     $dbconn->exec($sql);
     echo "done";

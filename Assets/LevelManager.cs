@@ -311,6 +311,7 @@ public class LevelManager : MonoBehaviour
             progressData.uname = PlayerPrefs.GetString("username");
             progressData.speed = PlayerScript.speed;
             PlayerPrefs.SetInt("bosshealth", PlayerPrefs.GetInt("bosshealth"));
+            progressData.bosshealth = PlayerPrefs.GetInt("bosshealth");
         }
         else if(level == "BossLevel")
         {

@@ -50,7 +50,14 @@ public class DeleteDataScript : MonoBehaviour
         PlayerPrefs.SetInt("upgrade", 0);
         PlayerPrefs.SetString("skin", "normal");
         PlayerPrefs.SetInt("score", 0);
-        PlayerPrefs.SetInt("health", 100);
+        if (PlayerPrefs.GetInt("isFB") == 1)
+        {
+            PlayerPrefs.SetInt("health", 150);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("health", 100);
+        }
         PlayerPrefs.SetInt("speed", 7);
         PlayerPrefs.SetInt("nectarpoints", 1);
         PlayerPrefs.SetInt("bosshealth", 400);
