@@ -46,24 +46,6 @@ public class FinishGame : MonoBehaviour
         progressData.uname = PlayerPrefs.GetString("username");
         string jsonData = JsonUtility.ToJson(progressData);
 
-        PlayerPrefs.SetString("level", "Level1");
-        PlayerPrefs.SetInt("upgrade", 0);
-        PlayerPrefs.SetString("skin", "normal");
-        
-        if (PlayerPrefs.GetInt("isFB") == 1)
-        {
-            PlayerPrefs.SetInt("health", 150);
-            PlayerPrefs.SetInt("score", 50);
-        }
-        else
-        {
-            PlayerPrefs.SetInt("health", 100);
-            PlayerPrefs.SetInt("score", 0);
-        }
-        PlayerPrefs.SetInt("speed", 7);
-        PlayerPrefs.SetInt("nectarpoints", 1);
-        PlayerPrefs.SetInt("bosshealth", 400);
-
         StartCoroutine(PostUsername("https://vesta.uclan.ac.uk/~diqbal/UnityScripts/deleteData.php", jsonData));
     }
 

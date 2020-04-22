@@ -67,6 +67,7 @@ public class Login : MonoBehaviour
             {
                 SceneManager.LoadScene("MainMenu");
                 PlayerPrefs.SetString("username", unameIF.text);
+                PlayerPrefs.SetInt("isFB", 0);
             }
         }
     }
