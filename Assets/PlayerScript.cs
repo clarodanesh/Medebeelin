@@ -108,7 +108,14 @@ public class PlayerScript : MonoBehaviour
         {
             if (isGrounded)
             {
-                playerRigidBody.velocity = gameObject.transform.up * 40;
+                if (LevelManager.level == "Level1")
+                {
+                    playerRigidBody.velocity = gameObject.transform.up * 40;
+                }
+                else if(LevelManager.level == "Level2")
+                {
+                    playerRigidBody.velocity = gameObject.transform.up * 50;
+                }
                 if (direction == 1)
                 {
                     if (LevelManager.spriteType == "normal")

@@ -9,7 +9,14 @@ public class EnemyAttack : MonoBehaviour
         if (collision.collider.tag == "Player")
         {
             Debug.Log("Hitting");
-            PlayerScript.health = PlayerScript.health - 20;
+            if (LevelManager.level == "Level1")
+            {
+                PlayerScript.health = PlayerScript.health - 5;
+            }
+            else if(LevelManager.level == "Level2")
+            {
+                PlayerScript.health = PlayerScript.health - 25;
+            }
             DeathAudioManager.deathAudioSource.Play();
         }
     }
