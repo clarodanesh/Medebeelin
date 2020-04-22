@@ -69,10 +69,12 @@ public class ScreenControlScript : MonoBehaviour
         if(PlayerPrefs.GetInt("isFB") == 1)
         {
             progressData.health = 150;
+            progressData.score = 50;
         }
         else
         {
             progressData.health = 100;
+            progressData.score = 0;
         }
         progressData.uname = PlayerPrefs.GetString("username");
         progressData.speed = 7;

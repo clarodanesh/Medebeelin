@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class DeleteDataScript : MonoBehaviour
+public class FinishGame : MonoBehaviour
 {
     [System.Serializable]
     public class DataToSend
@@ -49,6 +49,7 @@ public class DeleteDataScript : MonoBehaviour
         PlayerPrefs.SetString("level", "Level1");
         PlayerPrefs.SetInt("upgrade", 0);
         PlayerPrefs.SetString("skin", "normal");
+        
         if (PlayerPrefs.GetInt("isFB") == 1)
         {
             PlayerPrefs.SetInt("health", 150);
