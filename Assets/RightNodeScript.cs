@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RightNodeScript : MonoBehaviour
 {
+    //right node used to make enemy go back leftward
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag.Contains("Enemy"))

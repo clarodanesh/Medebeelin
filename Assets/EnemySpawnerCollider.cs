@@ -5,53 +5,55 @@ using UnityEngine.SceneManagement;
 
 public class EnemySpawnerCollider : MonoBehaviour
 {
+    //will use this to instantiate enemy bees
     public GameObject bee;
-    System.Random rnd = new System.Random();
+
+    //check if enemies have been spawned before trying to spawn them
     private bool firstSpawned, secondSpawned, thirdSpawned;
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //checking if player enters trigger
         if (collision.tag.Contains("Player"))
         {
-            Debug.Log("hittin gthe player should show");
-            Debug.Log(" " + gameObject.transform.position.x);
-            Debug.Log(firstSpawned);
+            //need to check if the scene is level 1 and instantiate bees accordingly
             if (SceneManager.GetActiveScene().name == "Level1")
             {
                 if (gameObject.transform.position.x == 97.47f && firstSpawned == false)
                 {
-                    Debug.Log("inside first");
+                    //spawn the enemy and set the bool to true to show its spawned
                     SpawnEnemy(98.57f, 0.699f, 0f);
                     firstSpawned = true;
                 }
                 else if (gameObject.transform.position.x == 115.967f && secondSpawned == false)
                 {
-                    Debug.Log("inside second");
+                    //spawn the enemy and set the bool to true to show its spawned
                     SpawnEnemy(117.53f, 0.62f, 0f);
                     secondSpawned = true;
                 }
                 else if (gameObject.transform.position.x == 142.46f && thirdSpawned == false)
                 {
-                    Debug.Log("inside third");
+                    //spawn the enemy and set the bool to true to show its spawned
                     SpawnEnemy(146.051f, -1.493f, 0f);
                     thirdSpawned = true;
                 }
             }else if(SceneManager.GetActiveScene().name == "Level2")
             {
+                //check if the scene is level 2 as bee positions are different
                 if (gameObject.transform.position.x == 67.48f && firstSpawned == false)
                 {
-                    Debug.Log("inside first");
+                    //spawn the enemy and set the bool to true to show its spawned
                     SpawnEnemy(74.32f, 2.01f, 0f);
                     firstSpawned = true;
                 }
                 else if (gameObject.transform.position.x == 152.94f && secondSpawned == false)
                 {
-                    Debug.Log("inside second");
+                    //spawn the enemy and set the bool to true to show its spawned
                     SpawnEnemy(157.588f, -3f, 0f);
                     secondSpawned = true;
                 }
                 else if (gameObject.transform.position.x == 94.44f && thirdSpawned == false)
                 {
-                    Debug.Log("inside third");
+                    //spawn the enemy and set the bool to true to show its spawned
                     SpawnEnemy(99.16f, -3f, 0f);
                     thirdSpawned = true;
                 }
@@ -59,20 +61,18 @@ public class EnemySpawnerCollider : MonoBehaviour
         }
     }
 
+    //function used to spawn the enemy bee
     void SpawnEnemy(float x, float y, float z)
     {
-        Debug.Log("XP" + gameObject.transform.position.x);
-        GameObject go = Instantiate(bee);
-        float randX = Random.Range(-10f, 10f);
-        float randY = Random.Range(-10f, 10f);
-        //go.transform.position = new Vector3(randX, randY, randX);
-        go.transform.position = new Vector3(x, y, z);
-        go.transform.GetChild(0).transform.localPosition = new Vector2(-0.1405144f, 0.5059581f);
+        GameObject beeEnemy = Instantiate(bee);
+        beeEnemy.transform.position = new Vector3(x, y, z);
+        beeEnemy.transform.GetChild(0).transform.localPosition = new Vector2(-0.1405144f, 0.5059581f);
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        //nothing has spwned on start
         firstSpawned = false;
         secondSpawned = false;
         thirdSpawned = false;

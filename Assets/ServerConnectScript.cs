@@ -5,6 +5,9 @@ using UnityEngine.Networking;
 
 public class ServerConnectScript : MonoBehaviour
 {
+    
+    //CONNECTS TO THE SERVER ONLY USED TO DEMONSTRATE CONNECTIVITY
+
     string uname;
     // Start is called before the first frame update
     void Start()

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class InstructionScript : MonoBehaviour
 {
+    //shows another instruction when user enters the trigger
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag.Contains("Player"))

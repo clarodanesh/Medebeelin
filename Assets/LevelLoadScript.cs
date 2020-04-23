@@ -5,13 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class LevelLoadScript : MonoBehaviour
 {
+    //trigger user to check if player is going to new level as reached end of current one
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //WANT TO DELETE THE GAMEOBJECT HERE AND UPDATE THE SCORE
         if (collision.tag.Contains("Player"))
         {
             if (LevelManager.level == "Level1")
             {
+                //set the data to the indexeddb so can retrieve it when new scene is opened
                 PlayerPrefs.SetString("level", "Level2");
                 PlayerPrefs.SetInt("upgrade", LevelManager.timesUpgraded);
                 PlayerPrefs.SetString("skin", LevelManager.spriteType);
@@ -21,10 +22,12 @@ public class LevelLoadScript : MonoBehaviour
                 PlayerPrefs.SetInt("nectarpoints", NectarPickup.nectarValue);
                 PlayerPrefs.SetInt("bosshealth", PlayerPrefs.GetInt("bosshealth"));
 
+                //load the scene
                 SceneManager.LoadScene("Level2");
             }
             else if (LevelManager.level == "Level2")
             {
+                //set the data to the indexeddb so can retrieve it when new scene is opened
                 PlayerPrefs.SetString("level", "BossLevel");
                 PlayerPrefs.SetInt("upgrade", LevelManager.timesUpgraded);
                 PlayerPrefs.SetString("skin", LevelManager.spriteType);
@@ -34,10 +37,12 @@ public class LevelLoadScript : MonoBehaviour
                 PlayerPrefs.SetInt("nectarpoints", NectarPickup.nectarValue);
                 PlayerPrefs.SetInt("bosshealth", PlayerPrefs.GetInt("bosshealth"));
 
+                //load the scene
                 SceneManager.LoadScene("BossLevel");
             }
             else
             {
+                //load the main menu scene
                 SceneManager.LoadScene("MainMenu");
             }
         }

@@ -8,11 +8,13 @@ using Facebook.Unity;
 
 public class Login : MonoBehaviour
 {
+    //holds the input fields for the username and password
     public InputField unameIF;
     public InputField passIF;
 
     public Text error;
 
+    //need to make a serializab;e object to use for the login
     [System.Serializable]
     public class DataToSend
     {
@@ -26,11 +28,15 @@ public class Login : MonoBehaviour
 
     }
 
+    //do the user login with the input details
     public void UserLogin()
     {
         DataToSend userData = new DataToSend();
+        //get the text and set it into variables
         userData.uname = unameIF.text;
         userData.pass = passIF.text;
+        
+        //details need to be filled
         if (userData.uname == "" || userData.pass == "")
         {
             error.text = "Dont leave the inputs blank";
@@ -39,12 +45,15 @@ public class Login : MonoBehaviour
         {
             string jsonData = JsonUtility.ToJson(userData);
 
+            //send the login request to the server
             StartCoroutine(PostRequestJSON("https://vesta.uclan.ac.uk/~diqbal/UnityScripts/login.php", jsonData));
         }
     }
 
+    //used to post the request and handle it
     IEnumerator PostRequestJSON(string url, string json)
     {
+        //setup web request
         var uwr = new UnityWebRequest(url, "POST");
         byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
         uwr.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
@@ -58,13 +67,14 @@ public class Login : MonoBehaviour
         }
         else
         {
-            Debug.Log("Received: " + uwr.downloadHandler.text);
+            //if user exists display to screen
             if(uwr.downloadHandler.text == "user already exists")
             {
                 error.text = "Select a unique username or Enter the correct password";
             }
             else if(uwr.downloadHandler.text == "done")
             {
+                //if user was added then open game
                 SceneManager.LoadScene("MainMenu");
                 PlayerPrefs.SetString("username", unameIF.text);
                 PlayerPrefs.SetInt("isFB", 0);
@@ -102,14 +112,15 @@ public class Login : MonoBehaviour
     {
         if (!isGameShown)
         {
-            //Time.timescale = 0;
+
         }
         else
         {
-            ///Time.timescale = 1;
+
         }
     }
 
+    //try to login with facebook
     public void FBLoginPressed()
     {
         var perms = new List<string>() { "public_profile", "email" };
@@ -131,9 +142,8 @@ public class Login : MonoBehaviour
 
     private void DealWithInfoResponse(IGraphResult result)
     {
+        //add the user to the db too using their email
         PlayerInfo playerInfo = JsonUtility.FromJson<PlayerInfo>(result.RawResult);
-        // nameTextArea.GetComponent<Text>().text = playerInfo.name;
-        // emailTextArea.GetComponent<Text>().text = playerInfo.email;
         DataToSend userData = new DataToSend();
         userData.uname = playerInfo.email;
         userData.pass = "facebookLogin";
@@ -144,6 +154,7 @@ public class Login : MonoBehaviour
 
     }
 
+    //playerinfo object contains the json result
     public class PlayerInfo
     {
         public string name;
@@ -151,8 +162,10 @@ public class Login : MonoBehaviour
         public string id;
     }
 
+    //post request using fb
     IEnumerator PostRequestJSONFB(string url, string json, string email)
     {
+        //setup web request
         var uwr = new UnityWebRequest(url, "POST");
         byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
         uwr.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
@@ -166,13 +179,13 @@ public class Login : MonoBehaviour
         }
         else
         {
-            Debug.Log("Received: " + uwr.downloadHandler.text);
             if (uwr.downloadHandler.text == "user already exists")
             {
                 error.text = "Select a unique username or Enter the correct password";
             }
             else if (uwr.downloadHandler.text == "done")
             {
+                //login was success so load mein menu
                 SceneManager.LoadScene("MainMenu");
                 PlayerPrefs.SetString("username", email);
                 PlayerPrefs.SetInt("isFB", 1);

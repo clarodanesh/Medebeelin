@@ -30,19 +30,28 @@ public class PlayerBulletScript : MonoBehaviour
         StartCoroutine(DelaySelfDestruct(10f));
     }
 
-    void FaceBoss(GameObject otf)
+    /*used unity forums to aid with this
+     * needed the ability to rotate and face an object
+     * https://answers.unity.com/questions/1350050/how-do-i-rotate-a-2d-object-to-face-another-object.html 
+    */
+    //player bullet needs to aim at the boss
+    void FaceBoss(GameObject objectToFace)
     {
-        Vector3 targ = otf.transform.position;
-        targ.z = 0f;
+        //get the target pos and set its x axis to 0
+        Vector3 target = objectToFace.transform.position;
+        target.z = 0f;
 
-        Vector3 objectPos = transform.position;
-        targ.x = targ.x - objectPos.x;
-        targ.y = targ.y - objectPos.y;
+        //set the object x and y calculated using current obj x and y
+        Vector3 objectPosition = transform.position;
+        target.x = target.x - objectPosition.x;
+        target.y = target.y - objectPosition.y;
 
-        float angle = Mathf.Atan2(targ.y, targ.x) * Mathf.Rad2Deg;
+        //set the angle of rotation and rotate
+        float angle = Mathf.Atan2(target.y, target.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
 
+    //self destruct as maybe out of bounds
     IEnumerator DelaySelfDestruct(float delay)
     {
         yield return new WaitForSeconds(delay);

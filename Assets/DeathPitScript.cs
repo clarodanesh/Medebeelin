@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DeathPitScript : MonoBehaviour
 {
+    //trigger checks if the player hit it then kill the player
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag.Contains("Player"))
@@ -14,6 +15,7 @@ public class DeathPitScript : MonoBehaviour
         }
     }
 
+    //kill the player
     void RemovePlayerHealth()
     {
         PlayerScript.health = 0;

@@ -8,6 +8,7 @@ public class UpgradeAudioManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //get the audio source for upogrades
         upgradeAudioSource = GetComponent<AudioSource>();
     }
 

@@ -8,6 +8,7 @@ public class PlayerAudioManagerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //get the audio source
         playerAudioSource = GetComponent<AudioSource>();
     }
 

@@ -6,20 +6,17 @@ public class NectarPickup : MonoBehaviour
 {
     public static int nectarValue;
 
+    //if the player hits a nectar then destroy it and increase the score
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //WANT TO DELETE THE GAMEOBJECT HERE AND UPDATE THE SCORE
         if (collision.tag.Contains("Player"))
         {
-
+            //increase scorea and play pickup sound
             LevelManager.score += nectarValue;
             
             AudioManagerScript.nectarAudioSource.Play();
-            //remove the coin
-            //Destroy(gameObject);
             gameObject.SetActive(false);
-            //you should also have a manager class where you store your score and other useful stuff
-            
         }
     }
 
@@ -32,6 +29,6 @@ public class NectarPickup : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("from the nectar pcikup script " + NectarPickup.nectarValue);
+
     }
 }

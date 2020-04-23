@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyInstructionScript : MonoBehaviour
 {
+    //trigger to check if the player hit the instrcuction trigger
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag.Contains("Player"))

@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerScript : MonoBehaviour
 {
+    //public variables set in the inspector
     public ParticleSystem nectarHitParticles;
     private int direction;
     public static int health;
@@ -13,16 +14,18 @@ public class PlayerScript : MonoBehaviour
     public bool isGrounded;
     public Rigidbody2D playerRigidBody;
     public Animator animator;
+    //animator controllers used for the animation states
     public RuntimeAnimatorController rightAnim;
     public RuntimeAnimatorController leftAnim;
     public RuntimeAnimatorController stoppedRight;
     public RuntimeAnimatorController stoppedLeft;
-
     public RuntimeAnimatorController upRightAnim;
     public RuntimeAnimatorController upLeftAnim;
     public RuntimeAnimatorController upStoppedRight;
     public RuntimeAnimatorController upStoppedLeft;
 
+    //if the player hits the enemy then the enemy needs to go the opposite way
+    //fixes bug where enemy keeps hitting player and takes too much health away
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.tag == "Enemy")
@@ -58,12 +61,14 @@ public class PlayerScript : MonoBehaviour
         direction = 1;
     }
 
+    //remove all of the player health
     void RemovePlayerHealth()
     {
         health = 0;
         LevelManager.score = 0;
     }
 
+    //need to keep checking if player is alive or dead
     void CheckPlayerHealth()
     {
         if(health <= 0)
@@ -78,10 +83,14 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.RightArrow))
+        //Using animation controller to change animation during runtime
+        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
+            //set the direction to 1 means going right
             direction = 1;
+            //move the player
             playerRigidBody.velocity = gameObject.transform.right * speed;
+            //sets the skin for the player
             if (LevelManager.spriteType == "normal")
             {
                 animator.runtimeAnimatorController = rightAnim as RuntimeAnimatorController;
@@ -91,8 +100,9 @@ public class PlayerScript : MonoBehaviour
                 animator.runtimeAnimatorController = upRightAnim as RuntimeAnimatorController;
             }
         }
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
+            //SAME AS ABOVE
             direction = 2;
             playerRigidBody.velocity = -gameObject.transform.right * speed;
             if (LevelManager.spriteType == "normal")
@@ -104,8 +114,10 @@ public class PlayerScript : MonoBehaviour
                 animator.runtimeAnimatorController = upLeftAnim as RuntimeAnimatorController;
             }
         }
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
         {
+            //check if the player is grounded before allowing to jump again
+            //players only allowed one jump stops them from floating away
             if (isGrounded)
             {
                 if (LevelManager.level == "Level1")
@@ -138,12 +150,13 @@ public class PlayerScript : MonoBehaviour
                         animator.runtimeAnimatorController = upLeftAnim as RuntimeAnimatorController;
                     }
                 }
+                //plays the jump sound
                 PlayerAudioManagerScript.playerAudioSource.Play();
-                //isGrounded = false;
             }
         }
         if(Input.anyKey == false)
         {
+            //if no keys down just set the animation to still
             Debug.Log("NO KEYS DOWN");
             if(direction == 1)
             {
@@ -169,10 +182,7 @@ public class PlayerScript : MonoBehaviour
             }
         }
 
-        Debug.Log("SPEED" + speed);
-        Debug.Log("TRANSFORM RIGHT" + gameObject.transform.right);
-        Debug.Log("VELOCITY" + playerRigidBody.velocity);
-
+        //check the player health to see if they are dead yet
         CheckPlayerHealth();
     }
 }

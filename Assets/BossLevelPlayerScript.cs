@@ -5,8 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class BossLevelPlayerScript : MonoBehaviour
 {
+
+    //public variables particle system, integers, bool, animatorcontrollers, and a gameobject
+    //these will be set using the inspector
     public ParticleSystem nectarHitParticles;
-    private int direction;
     public static int health;
     public static int speed;
     public bool isGrounded;
@@ -16,55 +18,33 @@ public class BossLevelPlayerScript : MonoBehaviour
     public RuntimeAnimatorController leftAnim;
     public RuntimeAnimatorController stoppedRight;
     public RuntimeAnimatorController stoppedLeft;
-
     public RuntimeAnimatorController upRightAnim;
     public RuntimeAnimatorController upLeftAnim;
     public RuntimeAnimatorController upStoppedRight;
     public RuntimeAnimatorController upStoppedLeft;
-
     public GameObject playerBullet;
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.collider.tag == "Enemy")
-        {
-            if (EnemyScript.pos == "left")
-            {
-                EnemyScript.pos = "right";
-            }
-            else if (EnemyScript.pos == "right")
-            {
-                EnemyScript.pos = "left";
-            }
-        }
-        if (collision.collider.tag == "EnemyBody")
-        {
-            nectarHitParticles.Play();
-            if (EnemyScript.pos == "left")
-            {
-                EnemyScript.pos = "right";
-            }
-            else if (EnemyScript.pos == "right")
-            {
-                EnemyScript.pos = "left";
-            }
-        }
-    }
+    //the direction is just set here
+    private int direction;
 
     // Start is called before the first frame update
     void Start()
     {
+        //set the rigidbody of the player
         playerRigidBody = GetComponent<Rigidbody2D>();
+        //will use the animator for the different animation states of the player
         animator = GetComponent<Animator>();
         direction = 1;
     }
 
+    //make player health and score 0 as they are dead
     void RemovePlayerHealth()
     {
         health = 0;
         LevelManager.score = 0;
     }
 
+    //this keeps checking if the player health has dropped to 0 or below
     void CheckPlayerHealth()
     {
         if (health <= 0)
@@ -75,35 +55,26 @@ public class BossLevelPlayerScript : MonoBehaviour
         }
     }
 
+    //spawn small stingers/bullets at the players position that will then shoot at the boss
     void SpawnBullet(float x, float y, float z)
     {
-        Debug.Log("SPAWNING A BULLET " + gameObject.transform.position.x);
-        GameObject go = Instantiate(playerBullet);
-        float randX = Random.Range(-10f, 10f);
-        float randY = Random.Range(-10f, 10f);
-        //go.transform.position = new Vector3(randX, randY, randX);
-        go.transform.position = new Vector3(x, y, z);
-        //go.transform.GetChild(0).transform.localPosition = new Vector2(-0.1405144f, 0.5059581f);
+        GameObject bullet = Instantiate(playerBullet);
+        bullet.transform.position = new Vector3(x, y, z);
     }
-
-    /*void AimAtMouse()
-    {
-        Vector3 mousePos = Input.mousePosition;
-        mousePos.z = 0;
-        float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
-        //angle -= 90;
-        transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
-    }*/
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.RightArrow))
+        //Check they ley being presses, supports arrow and wasd keys
+        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
             direction = 1;
+            //move the object in that direction
             playerRigidBody.velocity = gameObject.transform.right * speed;
+            //check if the character is upgraded or not and set according sprite
             if (LevelManager.spriteType == "normal")
             {
+                //using runtimeAnimatorController to change the spritesheets at runtime
                 animator.runtimeAnimatorController = rightAnim as RuntimeAnimatorController;
             }
             else if (LevelManager.spriteType == "upgraded")
@@ -111,8 +82,9 @@ public class BossLevelPlayerScript : MonoBehaviour
                 animator.runtimeAnimatorController = upRightAnim as RuntimeAnimatorController;
             }
         }
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
+            //SAME AS ABOVE
             direction = 2;
             playerRigidBody.velocity = -gameObject.transform.right * speed;
             if (LevelManager.spriteType == "normal")
@@ -124,8 +96,9 @@ public class BossLevelPlayerScript : MonoBehaviour
                 animator.runtimeAnimatorController = upLeftAnim as RuntimeAnimatorController;
             }
         }
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
         {
+            //SAME AS ABOVE
             playerRigidBody.velocity = gameObject.transform.up * speed;
             if (direction == 1)
             {
@@ -149,11 +122,10 @@ public class BossLevelPlayerScript : MonoBehaviour
                     animator.runtimeAnimatorController = upLeftAnim as RuntimeAnimatorController;
                 }
             }
-            //PlayerAudioManagerScript.playerAudioSource.Play();
-            //isGrounded = false;
         }
-        if (Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
         {
+            //SAME AS ABOVE
             playerRigidBody.velocity = -gameObject.transform.up * speed;
             if (direction == 1)
             {
@@ -177,18 +149,18 @@ public class BossLevelPlayerScript : MonoBehaviour
                     animator.runtimeAnimatorController = upLeftAnim as RuntimeAnimatorController;
                 }
             }
-            //PlayerAudioManagerScript.playerAudioSource.Play();
-            //isGrounded = false;
         }
         if (Input.GetMouseButtonDown(0))
         {
+            //when the mouse left button is clicked then shoot a small stinger/bullet
             SpawnBullet(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
         }
         if (Input.anyKey == false)
         {
-            Debug.Log("NO KEYS DOWN");
+            //if no keys are pressed then use the still spritesheet 
             if (direction == 1)
             {
+                //check the upgrade type and set the sprite accordingly
                 if (LevelManager.spriteType == "normal")
                 {
                     animator.runtimeAnimatorController = stoppedRight as RuntimeAnimatorController;
@@ -211,10 +183,7 @@ public class BossLevelPlayerScript : MonoBehaviour
             }
         }
 
-        Debug.Log("SPEED" + speed);
-        Debug.Log("TRANSFORM RIGHT" + gameObject.transform.right);
-        Debug.Log("VELOCITY" + playerRigidBody.velocity);
-        //AimAtMouse();
+        //check the player health to see if they are dead
         CheckPlayerHealth();
     }
 }

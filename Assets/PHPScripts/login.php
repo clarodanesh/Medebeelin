@@ -13,6 +13,7 @@ $dbconn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 $s = $dbconn->query("SELECT id, password FROM UnityLogin WHERE username='$data->uname'", PDO::FETCH_ASSOC);
 
+//if a user exists with this username then either show user exists or do an fb login
 if($s->rowCount() > 0){
     while($row = $s->fetch()){
         if($data->pass == "facebookLogin"){
@@ -26,9 +27,11 @@ if($s->rowCount() > 0){
         //echo $row['id'];
     }
 }else if($s->rowCount() == 0){
+    //facebook logins have preset passwords
     if($data->pass == "facebookLogin"){
         $sql = "INSERT INTO UnityLogin (username) VALUES ('$data->uname')";
     }else{
+        //insert the data into db
         $sql = "INSERT INTO UnityLogin (username, password) VALUES ('$data->uname', '$data->pass')";
     }
 

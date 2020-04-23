@@ -5,23 +5,21 @@ using UnityEngine.Networking;
 
 public class DeleteDataScript : MonoBehaviour
 {
+    //Serializable object to send to the server as encoding and decoding
     [System.Serializable]
     public class DataToSend
     {
         public string uname;
-        public string skin;
-        public int upgrade;
-        public string level;
-        public int score;
-        public int health;
-        public int speed;
-        public int nectarpoints;
-        public int bosshealth;
     }
 
+    //post the users username to delete data
     IEnumerator PostUsername(string url, string json)
     {
+        //create a post unity web request
+        //made with code from brendans lecture
+        //all unity web request are made with help from brendans lectures
         var uwr = new UnityWebRequest(url, "POST");
+        //set request header and the json data to send
         byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
         uwr.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
         uwr.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
@@ -42,10 +40,12 @@ public class DeleteDataScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //using the serializable object to send the data to the server
         DataToSend progressData = new DataToSend();
-        progressData.uname = PlayerPrefs.GetString("username");
+        progressData.uname = PlayerPrefs.GetString("username"); //only need username to delete the data
         string jsonData = JsonUtility.ToJson(progressData);
 
+        //need to set this data back to default in indexeddb
         PlayerPrefs.SetString("level", "Level1");
         PlayerPrefs.SetInt("upgrade", 0);
         PlayerPrefs.SetString("skin", "normal");
@@ -63,6 +63,7 @@ public class DeleteDataScript : MonoBehaviour
         PlayerPrefs.SetInt("nectarpoints", 1);
         PlayerPrefs.SetInt("bosshealth", 400);
 
+        //send the request to delete the data
         StartCoroutine(PostUsername("https://vesta.uclan.ac.uk/~diqbal/UnityScripts/deleteData.php", jsonData));
     }
 
